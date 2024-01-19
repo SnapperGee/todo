@@ -11,9 +11,9 @@
     "Maria Adame",
     "Snap <XxSnapperGeexX@gmail.com> (https://github.com/SnapperGee)"
   ],
-  "repository": "",
+  "repository": "github:SnapperGee/todo",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/SnapperGee/todo/issues"
   },
   "scripts": {
     "build": "npm --prefix client run build && npm --prefix server run build",
