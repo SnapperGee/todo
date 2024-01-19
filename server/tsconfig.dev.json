@@ -3,6 +3,7 @@
     "compilerOptions":
     {
       "outDir": "./build/dev/js",
-      "sourceMap": true
+      "sourceMap": true,
+      "skipLibCheck": true
     }
   }
