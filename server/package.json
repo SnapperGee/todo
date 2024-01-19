@@ -16,7 +16,8 @@
     "dev": "NODE_ENV=development node --enable-source-maps --loader ts-node/esm ./src/main/ts/index.ts",
     "prebuild": "rm -rf ./build/dist",
     "prestart": "npm run build",
-    "start": "NODE_ENV=production node ./build/dist/js/index.js"
+    "start": "NODE_ENV=production node ./build/dist/js/index.js",
+    "ts" : "tsc -p ./tsconfig.dev.json"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
