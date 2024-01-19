@@ -14,7 +14,7 @@ app.use(apiRoute);
 if (process.env.NODE_ENV === "production")
 {
     app.use(express.static(REACT_DIR));
-    app.get("*", (req, res) => res.sendFile(REACT_INDEX_HTML));
+    app.get("*", (_req, res) => res.sendFile(REACT_INDEX_HTML));
 }
 
 export default app;
