@@ -1,0 +1,31 @@
+{
+  "name": "todo",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Todo task manager web app.",
+  "type": "module",
+  "main": "./server/build/dist/js/index.js",
+  "authors": [
+    "Danny Collan",
+    "Zachary Guitierrez",
+    "Maria Adame",
+    "Snap <XxSnapperGeexX@gmail.com> (https://github.com/SnapperGee)"
+  ],
+  "repository": "",
+  "bugs": {
+    "url": ""
+  },
+  "scripts": {
+    "build": "npm --prefix client run build && npm --prefix server run build",
+    "clean": "rm -rf ./client/dist ./server/build",
+    "dev": "concurrently -k \"npm --prefix server run dev\" \"npm run react\"",
+    "express": "npm --prefix server run dev",
+    "postinstall": "npm --prefix client install && npm --prefix server install",
+    "prestart": "npm --prefix client run build",
+    "react": "npm --prefix client run dev",
+    "start": "npm --prefix server start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

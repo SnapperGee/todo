@@ -1,0 +1,34 @@
+# Todo frontend client
+
+Todo task manager web app client frontend.
+
+[![Node][node shield]][node website]
+[![TypeScript][typescript shield]][typescript website]
+[![react][react shield]][react website]
+[![React Router][react router shield]][react router website]
+[![SASS][sass shield]][sass website]
+[![Vite][vite shield]][vite website]
+[![ESLint][eslint shield]][typescript eslint website]
+[![npm][npm shield]][npm website]
+![Git][git shield]
+[![GitHub][github shield]][github repo]
+
+[node shield]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white "node"
+[node website]: https://nodejs.org/en/about "node"
+[typescript shield]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white "TypeScript"
+[typescript website]: https://www.typescriptlang.org/ "TypeScript"
+[sass shield]: https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white "SASS"
+[sass website]: https://sass-lang.com/ "SASS"
+[react shield]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB "React"
+[react website]: https://react.dev/ "React"
+[react router shield]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white "React Router"
+[react router website]: https://www.npmjs.com/package/react-router "React Router"
+[vite shield]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white "Vite"
+[vite website]: https://vitejs.dev "Vite"
+[eslint shield]: https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white "TypeScript ESLint"
+[typescript eslint website]: https://typescript-eslint.io/ "TypeScript ESLint"
+[npm shield]: https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white "npm"
+[npm website]: https://www.npmjs.com/ "npm"
+[git shield]: https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white "Git"
+[github shield]: https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white "github"
+[github repo]: https://github.com/SnapperGee/portfolio-client "GitHub repo"
