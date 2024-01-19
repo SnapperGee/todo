@@ -1,57 +1,61 @@
+import { taskSchema } from './task';
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
-// import schema from Book.js
-const bookSchema = require('./Book');
-
 const userSchema = new Schema(
-  {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
+    {
+        username: {
+            type: String,
+            required: [true, "Username is required."],
+            unique: true,
+            trim: true,
+            minlength: [1, "Username must contain a 1 character."],
+            validate: {
+                validator: async (username: string) => {
+                    return username.length !== 0 && ! /\s/.test(username);
+                },
+                message: ({value}) => `${value} must contain a character and can't contain whitespace.`
+            }
+        },
+        password: {
+            type: String,
+            required: true,
+            minLength: [8, "Password must be at least 8 characters."]
+        },
+        tasks: [taskSchema],
     },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      match: [/.+@.+\..+/, 'Must use a valid email address'],
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    // set savedBooks to be an array of data that adheres to the bookSchema
-    savedBooks: [bookSchema],
-  },
-  // set this to use virtual below
-  {
-    toJSON: {
-      virtuals: true,
-    },
-  }
+    {
+        toJSON: {
+            virtuals: true,
+        },
+    }
 );
 
-// hash user password
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
-  }
+userSchema.pre("save", async function (next) {
+    if (this.isNew || this.isModified("password"))
+    {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
 
-  next();
+    next();
 });
 
-// custom method to compare and validate password for logging in
-userSchema.methods.isCorrectPassword = async function (password) {
-  return bcrypt.compare(password, this.password);
+userSchema.methods.isCorrectPassword = async function (aString: string) {
+    return bcrypt.compare(aString, this.password);
 };
 
-// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
-userSchema.virtual('bookCount').get(function () {
-  return this.savedBooks.length;
+userSchema.virtual("hasTasks").get(function (): boolean {
+    return this.tasks.length !== 0;
 });
 
-const User = model('User', userSchema);
+userSchema.virtual("accomplishedTasks").get(function () {
+    return this.tasks.filter(task => task.accomplished);
+});
 
-module.exports = User;
+userSchema.virtual("pendingTasks").get(function () {
+    return this.tasks.filter(task => ! task.accomplished);
+});
+
+export const User = model("User", userSchema);
+
+export default User;
