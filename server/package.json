@@ -14,8 +14,10 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.dist.json",
     "dev": "NODE_ENV=development node --enable-source-maps --loader ts-node/esm ./src/main/ts/index.ts",
+    "drop": "NODE_ENV=development node --loader ts-node/esm ./scripts/drop.ts",
     "prebuild": "rm -rf ./build/dist",
     "prestart": "npm run build",
+    "seed": "NODE_ENV=development node --loader ts-node/esm ./scripts/seed.ts",
     "start": "NODE_ENV=production node ./build/dist/js/index.js",
     "ts" : "tsc -p ./tsconfig.dev.json"
   },
