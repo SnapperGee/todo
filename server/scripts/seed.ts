@@ -18,8 +18,22 @@ for (const task of tasks)
 
 db.once("open", async () =>
 {
-    await Subtask.insertMany(subtasks);
-    await Task.insertMany(tasks);
-    await User.insertMany(users);
-    await db.close();
+    try
+    {
+        console.log("Seeding database...");
+        await Subtask.insertMany(subtasks);
+        await Task.insertMany(tasks);
+        await User.insertMany(users);
+        console.log("Database seeded.");
+    }
+    catch (error)
+    {
+        console.error(error);
+    }
+    finally
+    {
+        console.log("Closing database connection...");
+        await db.close();
+        console.log("Database connection closed.");
+    }
 });
