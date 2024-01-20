@@ -1,4 +1,4 @@
-import { subtaskSchema } from "./subtask";
+import { subtaskSchema } from "./subtask.js";
 import { Schema, model } from "mongoose";
 
 export const taskSchema = new Schema(

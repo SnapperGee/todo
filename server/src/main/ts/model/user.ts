@@ -1,4 +1,4 @@
-import { taskSchema } from './task';
+import { taskSchema } from "./task.js";
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
