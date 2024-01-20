@@ -1,36 +1,36 @@
 import { Types } from "mongoose";
 
-export const users = Object.freeze([
-    Object.freeze({
+export const users = [
+    {
         _id: new Types.ObjectId(),
-        name: "John Wick",
+        username: "JohnWick",
         password: "johnwickpassword"
-    }),
-    Object.freeze({
+    },
+    {
         _id: new Types.ObjectId(),
-        name: "Harry Potter",
+        username: "HarryPotter",
         password: "harrypotter"
-    }),
-    Object.freeze({
+    },
+    {
         _id: new Types.ObjectId(),
-        name: "Neo",
+        username: "Neo",
         password: "neopassword"
-    }),
-    Object.freeze({
+    },
+    {
         _id: new Types.ObjectId(),
-        name: "Simba",
+        username: "Simba",
         password: "simbapassword"
-    }),
-    Object.freeze({
+    },
+    {
         _id: new Types.ObjectId(),
-        name: "Kion",
+        username: "Kion",
         password: "kionpassword"
-    }),
-    Object.freeze({
+    },
+    {
         _id: new Types.ObjectId(),
-        name: "Roger Smith",
+        username: "RogerSmith",
         password: "rogersmith"
-    })
-]);
+    }
+];
 
 export default users;

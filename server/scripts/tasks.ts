@@ -1,13 +1,14 @@
 import users from "./users.js";
 import { Types } from "mongoose";
 
-export const blogs = Object.freeze(users.map(user =>
-    Object.freeze({
+export const tasks = users.filter(() => Math.random() >= 0.5).map((user, index) =>
+    ({
         _id: new Types.ObjectId(),
-        title: `${user.name}'s Blog`,
-        description: Math.random() >= 0.5 ? `Blog created by ${user.name}.` : null,
-        userId: user.id
+        user: user._id,
+        title: `${user.username}'s task ${index}`,
+        accomplished: Math.random() >= 0.5,
+        schedule: new Date(Math.random() * Date.now())
     })
-));
+);
 
-export default blogs;
+export default tasks;
