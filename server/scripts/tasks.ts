@@ -7,7 +7,8 @@ export const tasks = users.filter(() => Math.random() >= 0.5).map((user, index) 
         user: user._id,
         title: `${user.username}'s task ${index}`,
         accomplished: Math.random() >= 0.5,
-        schedule: new Date(Math.random() * Date.now())
+        schedule: new Date(Math.random() * Date.now()),
+        subtasks: [] as Record<string, unknown>[]
     })
 );
 

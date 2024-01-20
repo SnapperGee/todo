@@ -4,32 +4,38 @@ export const users = [
     {
         _id: new Types.ObjectId(),
         username: "JohnWick",
-        password: "johnwickpassword"
+        password: "johnwickpassword",
+        tasks: [] as Record<string, unknown>[]
     },
     {
         _id: new Types.ObjectId(),
         username: "HarryPotter",
-        password: "harrypotter"
+        password: "harrypotter",
+        tasks: [] as Record<string, unknown>[]
     },
     {
         _id: new Types.ObjectId(),
         username: "Neo",
-        password: "neopassword"
+        password: "neopassword",
+        tasks: [] as Record<string, unknown>[]
     },
     {
         _id: new Types.ObjectId(),
         username: "Simba",
-        password: "simbapassword"
+        password: "simbapassword",
+        tasks: [] as Record<string, unknown>[]
     },
     {
         _id: new Types.ObjectId(),
         username: "Kion",
-        password: "kionpassword"
+        password: "kionpassword",
+        tasks: [] as Record<string, unknown>[]
     },
     {
         _id: new Types.ObjectId(),
         username: "RogerSmith",
-        password: "rogersmith"
+        password: "rogersmith",
+        tasks: [] as Record<string, unknown>[]
     }
 ];
 
