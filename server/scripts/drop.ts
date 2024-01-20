@@ -12,7 +12,7 @@ catch (error)
 }
 finally
 {
-    console.log("Closing connection...");
+    console.log("Closing database connection...");
     await db.close();
-    console.log("Connection closed.");
+    console.log("Database connection closed.");
 }
