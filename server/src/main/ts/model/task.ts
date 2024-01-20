@@ -28,7 +28,10 @@ export const taskSchema = new Schema(
             type: Date,
             required: [true, "Task schedule is required."]
         },
-        subtasks: [subtaskSchema]
+        subtasks: {
+            type: [subtaskSchema],
+            default: []
+        }
     },
     {
         toJSON: {

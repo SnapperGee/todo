@@ -22,7 +22,10 @@ const userSchema = new Schema(
             required: true,
             minLength: [8, "Password must be at least 8 characters."]
         },
-        tasks: [taskSchema],
+        tasks: {
+            type: [taskSchema],
+            default: []
+        }
     },
     {
         toJSON: {
