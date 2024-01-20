@@ -6,8 +6,7 @@ db.once("open", () => {
     {
         app.listen(process.env.PORT, () =>
         {
-            console.log(
-                `DB connected to: ${db.host}:${db.port}/${db.name}\nExpress server listening on http://127.0.0.1:${process.env.PORT}`);
+            console.log(`Express server listening on http://127.0.0.1:${process.env.PORT}`);
         });
     }
     else
