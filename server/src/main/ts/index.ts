@@ -1,5 +1,4 @@
 import { app } from "./server.js";
-import "dotenv/config";
 
 if (process.env.NODE_ENV === "development")
 {
