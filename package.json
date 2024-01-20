@@ -19,10 +19,12 @@
     "build": "npm --prefix client run build && npm --prefix server run build",
     "clean": "rm -rf ./client/dist ./server/build",
     "dev": "concurrently -k \"npm --prefix server run dev\" \"npm run react\"",
+    "drop": "npm --prefix server run drop",
     "express": "npm --prefix server run dev",
     "postinstall": "npm --prefix client install && npm --prefix server install",
     "prestart": "npm --prefix client run build",
     "react": "npm --prefix client run dev",
+    "seed": "npm --prefix server run seed",
     "start": "npm --prefix server start"
   },
   "devDependencies": {
