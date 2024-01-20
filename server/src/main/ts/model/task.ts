@@ -32,15 +32,15 @@ export const taskSchema = new Schema(
     }
 );
 
-taskSchema.virtual("hasSubtasks").get(function (): boolean {
+taskSchema.virtual("hasSubtasks").get(function(): boolean {
     return this.subtasks.length !== 0;
 });
 
-taskSchema.virtual("accomplishedSubtasks").get(function () {
+taskSchema.virtual("accomplishedSubtasks").get(function() {
     return this.subtasks.filter(subtask => subtask.accomplished);
 });
 
-taskSchema.virtual("pendingSubtasks").get(function () {
+taskSchema.virtual("pendingSubtasks").get(function() {
     return this.subtasks.filter(subtask => ! subtask.accomplished);
 });
 

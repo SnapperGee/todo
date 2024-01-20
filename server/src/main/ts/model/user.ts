@@ -44,15 +44,15 @@ userSchema.methods.isCorrectPassword = async function (aString: string) {
     return bcrypt.compare(aString, this.password);
 };
 
-userSchema.virtual("hasTasks").get(function (): boolean {
+userSchema.virtual("hasTasks").get(function(): boolean {
     return this.tasks.length !== 0;
 });
 
-userSchema.virtual("accomplishedTasks").get(function () {
+userSchema.virtual("accomplishedTasks").get(function() {
     return this.tasks.filter(task => task.accomplished);
 });
 
-userSchema.virtual("pendingTasks").get(function () {
+userSchema.virtual("pendingTasks").get(function() {
     return this.tasks.filter(task => ! task.accomplished);
 });
 
