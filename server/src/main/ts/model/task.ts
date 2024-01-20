@@ -3,6 +3,11 @@ import { Schema, model } from "mongoose";
 
 export const taskSchema = new Schema(
     {
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: [true, "User is required."]
+        },
         title: {
             type: String,
             required: [true, "Task title is required."],

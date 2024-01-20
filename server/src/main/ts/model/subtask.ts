@@ -2,6 +2,11 @@ import { Schema, model } from "mongoose";
 
 export const subtaskSchema = new Schema(
     {
+        task: {
+            type: Schema.Types.ObjectId,
+            ref: "Task",
+            required: [true, "Task is required."]
+        },
         title: {
             type: String,
             required: [true, "Subtask title is required."],
