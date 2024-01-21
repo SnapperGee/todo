@@ -1,5 +1,5 @@
-import { typeDefs } from "./schema/type-defs.js";
-import { resolvers } from "./schema/resolvers.js";
+import { typeDefs } from "./graphql/type-defs.js";
+import { resolvers } from "./graphql/resolvers.js";
 import { app } from "./server.js";
 import db from "./connection.js";
 import { ApolloServer } from "@apollo/server";
