@@ -34,10 +34,19 @@ const userSchema = new Schema(
     }
 );
 
-userSchema.pre("save", async function () {
+userSchema.pre("save", async function()
+{
     if (this.isNew || this.isModified("password"))
     {
         this.password = await bcrypt.hash(this.password, 10);
+    }
+});
+
+userSchema.pre("insertMany", async function(_next, docs)
+{
+    for (const doc of docs)
+    {
+        doc.password = await bcrypt.hash(doc.password, 10);
     }
 });
 
