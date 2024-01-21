@@ -5,7 +5,8 @@ Todo task manager web app client frontend.
 [![Node][node shield]][node website]
 [![TypeScript][typescript shield]][typescript website]
 [![react][react shield]][react website]
-[![apollo][apollo shield]][apollo website]
+[![Apollo][apollo shield]][apollo website]
+[![GraphQL][graphql shield]][graphql website]
 [![React Router][react router shield]][react router website]
 [![SASS][sass shield]][sass website]
 [![Vite][vite shield]][vite website]
@@ -24,7 +25,8 @@ Todo task manager web app client frontend.
 [react website]: https://react.dev/ "React"
 [apollo shield]: https://img.shields.io/badge/-ApolloGraphQL-311C87?style=for-the-badge&logo=apollo-graphql "Apollo"
 [apollo website]: https://www.apollographql.com/ "Apollo"
-
+[graphql shield]: https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white "GraphQL"
+[graphql website]: https://graphql.org/ "GraphQL"
 [react router shield]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white "React Router"
 [react router website]: https://www.npmjs.com/package/react-router "React Router"
 [vite shield]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white "Vite"
