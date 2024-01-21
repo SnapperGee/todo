@@ -5,6 +5,7 @@ Todo task manager web app.
 [![Node][node shield]][node website]
 [![TypeScript][typescript shield]][typescript website]
 [![react][react shield]][react website]
+[![apollo][apollo shield]][apollo website]
 [![React Router][react router shield]][react router website]
 [![Express][express shield]][express website]
 [![SASS][sass shield]][sass website]
@@ -21,6 +22,8 @@ Todo task manager web app.
 [sass shield]: https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white "SASS"
 [sass website]: https://sass-lang.com/ "SASS"
 [react shield]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB "React"
+[apollo website]: https://www.apollographql.com/ "Apollo"
+[apollo shield]: https://img.shields.io/badge/-ApolloGraphQL-311C87?style=for-the-badge&logo=apollo-graphql "Apollo"
 [react website]: https://react.dev/ "React"
 [react router shield]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white "React Router"
 [express shield]: https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB "Express"
