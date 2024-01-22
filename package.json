@@ -16,16 +16,15 @@
     "url": "https://github.com/SnapperGee/todo/issues"
   },
   "scripts": {
-    "build": "npm --prefix client run build && npm --prefix server run build",
-    "clean": "rm -rf ./client/dist ./server/build",
-    "dev": "concurrently -k \"npm --prefix server run dev\" \"npm run react\"",
-    "drop": "npm --prefix server run drop",
-    "express": "npm --prefix server run dev",
-    "postinstall": "npm --prefix client install && npm --prefix server install",
-    "prestart": "npm --prefix client run build",
-    "react": "npm --prefix client run dev",
-    "seed": "npm --prefix server run seed",
-    "start": "npm --prefix server start"
+    "build": "cd ./client && npm run build && cd ../server && npm run build",
+    "dev": "concurrently -k \" cd ./server && npm run dev\" \"npm run react\"",
+    "drop": "cd ./server && npm run drop",
+    "express": "cd ./server && npm run dev",
+    "postinstall": "cd ./client && npm i && cd ../server && npm i",
+    "prestart": " cd ./client && npm run build && cd ../server && npm run build",
+    "react": "cd ./client && npm run dev",
+    "seed": "cd ./server && npm run seed",
+    "start": "cd ./server && npm start"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

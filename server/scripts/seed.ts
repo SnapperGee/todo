@@ -3,7 +3,6 @@ import tasks from "./tasks.js";
 import subtasks from "./subtasks.js";
 import User from "../src/main/ts/model/user.js";
 import Task from "../src/main/ts/model/task.js";
-import Subtask from "../src/main/ts/model/subtask.js";
 import db from "../src/main/ts/connection.js";
 
 for (const subtask of subtasks)
@@ -20,10 +19,21 @@ db.once("open", async () =>
 {
     try
     {
-        console.log("Seeding database...");
-        await Subtask.insertMany(subtasks);
-        await Task.insertMany(tasks);
+        console.log("Seeding database...\nSeeding users...");
         await User.insertMany(users);
+
+        console.log("Seeding tasks...");
+        await Task.insertMany(tasks);
+
+        console.log("Seeding subtasks...");
+        for (const task of tasks)
+        {
+            await Task.findByIdAndUpdate(
+                task._id,
+                {$set: {subtasks: subtasks.filter(subtask => subtask.task.equals(task._id))} },
+            );
+        }
+
         console.log("Database seeded.");
     }
     catch (error)
