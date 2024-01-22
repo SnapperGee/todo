@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "cd ./client && npm run build && cd ../server && npm run build",
-    "dev": "concurrently -k \" cd ./server && npm run dev\" \"npm run react\"",
+    "dev": "concurrently -k \"npm run express\" \"npm run react\"",
     "drop": "cd ./server && npm run drop",
     "express": "cd ./server && npm run dev",
     "postinstall": "cd ./client && npm i && cd ../server && npm i",
