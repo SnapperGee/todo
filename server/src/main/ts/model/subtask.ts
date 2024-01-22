@@ -30,3 +30,5 @@ export const subtaskSchema = new Schema(
         },
     }
 );
+
+export default subtaskSchema;
