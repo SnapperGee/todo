@@ -31,8 +31,14 @@ export const resolvers =
         createTask: async (_parent: unknown, {userId, title, schedule}: {userId: string, title: string, schedule: string}): Promise<ITask> =>
             await Task.create({user: userId, title, schedule}),
 
-        createSubtask: async (_parent: unknown, {taskId, title}: {taskId: string, title: string}): Promise<ISubtask> =>
-            (await Task.findById(taskId))?.subtasks.create({title}) as ISubtask,
+        createSubtask: async (_parent: unknown, {taskId, title}: {taskId: string, title: string}): Promise<ITask | null> =>
+        {
+            return await Task.findByIdAndUpdate(
+                taskId,
+                { $push: {subtasks: {title}} },
+                { new: true }
+            );
+        },
 
         deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<typeof User | null> =>
             await User.findByIdAndDelete(id),

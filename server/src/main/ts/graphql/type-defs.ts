@@ -44,15 +44,15 @@ export const typeDefs =
     {
         createUser(username: String!, password: String!): User!
         createTask(userId: ID!, title: String!, schedule: String!): Task!
-        createSubtask(taskId: ID!, title: String!): Subtask!
-        deleteUser(id: ID!): User!
-        deleteTask(id: ID!): Task!
-        deleteSubtask(taskId: ID!, subtaskId: ID!): Subtask!
-        setUsername(id: ID!, username: String!): User!
-        setTaskTitle(id: ID!, title: String!): Task!
-        setSubtaskTitle(taskId: ID!, subtaskId: ID!, title: String!): Subtask!
-        setTaskAccomplished(id: ID!, accomplished: Boolean!): Task!
-        setSubtaskAccomplished(taskId: ID!, subtaskId: ID!, accomplished: Boolean!): Subtask!
+        createSubtask(taskId: ID!, title: String!): Task
+        deleteUser(id: ID!): User
+        deleteTask(id: ID!): Task
+        deleteSubtask(taskId: ID!, subtaskId: ID!): Subtask
+        setUsername(id: ID!, username: String!): User
+        setTaskTitle(id: ID!, title: String!): Task
+        setSubtaskTitle(taskId: ID!, subtaskId: ID!, title: String!): Subtask
+        setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
+        setSubtaskAccomplished(taskId: ID!, subtaskId: ID!, accomplished: Boolean!): Subtask
     }
 `;
 
