@@ -33,15 +33,9 @@ export const typeDefs =
 
     type Query
     {
-        user(id: ID!): User!
-        task(id: ID!): Task!
-        tasks(id: ID!): [Task]!
-        accomplishedTasks(id: ID!): [Task]!
-        pendingTasks(id: ID!): [Task]!
-        subtask(id: ID!): Subtask!
-        subtasks(id: ID!): [Subtask]!
-        accomplishedSubtasks(id: ID!): [Subtask]!
-        pendingSubtasks(id: ID!): [Subtask]!
+        user(id: ID!): User
+        task(id: ID!): Task!subtask(id: ID!): Task
+        subtask(taskId: ID!, subtaskId: ID!): Subtask
     }
 
     type Mutation
