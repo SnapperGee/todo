@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema } from "mongoose";
 
 export const subtaskSchema = new Schema(
     {
@@ -30,7 +30,3 @@ export const subtaskSchema = new Schema(
         },
     }
 );
-
-export const Subtask = model("Subtask", subtaskSchema);
-
-export default Subtask;
