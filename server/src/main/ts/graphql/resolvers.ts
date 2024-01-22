@@ -1,6 +1,6 @@
 import { User } from "../model/user.js";
 import { Task } from "../model/task.js";
-import { ISubtask } from "../model/subtask.js";
+import { subtaskSchema, ISubtask } from "../model/subtask.js";
 import { Types } from "mongoose";
 
 export const resolvers =
