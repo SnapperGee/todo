@@ -1,6 +1,6 @@
 import { User } from "../model/user.js";
-import { Task } from "../model/task.js";
-import { subtaskSchema, ISubtask } from "../model/subtask.js";
+import { Task, ITask } from "../model/task.js";
+import { ISubtask } from "../model/subtask.js";
 import { Types } from "mongoose";
 
 export const resolvers =
@@ -12,6 +12,9 @@ export const resolvers =
 
         task: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
             await Task.findById(id),
+
+        tasks: async (_parent: unknown, {id}: {id: string}): Promise<Types.DocumentArray<ITask> | undefined> =>
+            (await User.findById(id))?.tasks,
 
         subtask: async (_parent: unknown, {userId: taskId, subtaskId}: {userId: string, subtaskId: string}): Promise<ISubtask | null | undefined> =>
             (await Task.findById(taskId))?.subtasks.id(subtaskId),
