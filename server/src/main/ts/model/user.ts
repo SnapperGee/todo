@@ -1,8 +1,17 @@
-import { taskSchema } from "./task.js";
-import { Schema, model } from "mongoose";
+import { taskSchema, ITask } from "./task.js";
+import { Schema, model, Types } from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema = new Schema(
+export interface IUser
+{
+    username: string;
+    password: string;
+    tasks: Types.DocumentArray<ITask>;
+    accomplishedTasks: Types.DocumentArray<ITask>;
+    pendingTasks: Types.DocumentArray<ITask>;
+}
+
+const userSchema = new Schema<IUser>(
     {
         username: {
             type: String,
@@ -62,6 +71,6 @@ userSchema.virtual("pendingTasks").get(function() {
     return this.tasks.filter(task => ! task.accomplished);
 });
 
-export const User = model("User", userSchema);
+export const User = model<IUser>("User", userSchema);
 
 export default User;

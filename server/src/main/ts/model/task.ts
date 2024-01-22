@@ -1,7 +1,16 @@
-import { subtaskSchema } from "./subtask.js";
-import { Schema, model } from "mongoose";
+import { subtaskSchema, ISubtask } from "./subtask.js";
+import { Schema, model, Types } from "mongoose";
 
-export const taskSchema = new Schema(
+export interface ITask
+{
+    user: Schema.Types.ObjectId;
+    title: string;
+    accomplished: boolean;
+    schedule: Date;
+    subtasks: Types.DocumentArray<ISubtask>;
+}
+
+export const taskSchema = new Schema<ITask>(
     {
         user: {
             type: Schema.Types.ObjectId,
@@ -52,6 +61,6 @@ taskSchema.virtual("pendingSubtasks").get(function() {
     return this.subtasks.filter(subtask => ! subtask.accomplished);
 });
 
-export const Task = model("Task", taskSchema);
+export const Task = model<ITask>("Task", taskSchema);
 
 export default Task;
