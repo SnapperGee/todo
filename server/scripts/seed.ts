@@ -30,7 +30,7 @@ db.once("open", async () =>
         {
             await Task.findByIdAndUpdate(
                 task._id,
-                {$set: {subtasks: subtasks.filter(subtask => subtask.task.equals(task._id))} },
+                {$set: {subtasks: subtasks.filter(subtask => subtask.task.equals(task._id))} }
             );
         }
 
