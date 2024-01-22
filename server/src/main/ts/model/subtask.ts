@@ -1,6 +1,13 @@
-import { Schema } from "mongoose";
+import { Schema, Types } from "mongoose";
 
-export const subtaskSchema = new Schema(
+export interface ISubtask
+{
+    task: Schema.Types.ObjectId;
+    title: string;
+    accomplished: boolean;
+}
+
+export const subtaskSchema = new Schema<ISubtask>(
     {
         task: {
             type: Schema.Types.ObjectId,
