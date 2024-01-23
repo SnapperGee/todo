@@ -10,25 +10,28 @@ const apolloServer = new ApolloServer({
     resolvers,
 });
 
-const startApolloServer = async () =>
+await apolloServer.start();
+
+app.use('/graphql', expressMiddleware(apolloServer));
+
+try
 {
-    await apolloServer.start();
-    app.use('/graphql', expressMiddleware(apolloServer));
+    await db.startSession();
+}
+catch (error)
+{
+    console.error(error);
+}
 
-    db.startSession().then(() => {
-        if (process.env.NODE_ENV === "development")
-        {
-            app.listen(process.env.PORT, () =>
-            {
-                console.log(
-                    `DB connected to mongodb://${db.host}:${db.port}/${db.name}\nExpress server listening on http://127.0.0.1:${process.env.PORT}`);
-            });
-        }
-        else
-        {
-            app.listen(process.env.PORT);
-        }
+if (process.env.NODE_ENV === "development")
+{
+    app.listen(process.env.PORT, () =>
+    {
+        console.log(
+            `DB connected to mongodb://${db.host}:${db.port}/${db.name}\nExpress server listening on http://127.0.0.1:${process.env.PORT}`);
     });
-};
-
-startApolloServer();
+}
+else
+{
+    app.listen(process.env.PORT);
+}
