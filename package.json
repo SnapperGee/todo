@@ -21,7 +21,7 @@
     "drop": "cd ./server && npm run drop",
     "express": "cd ./server && npm run dev",
     "postinstall": "cd ./client && npm i && cd ../server && npm i",
-    "prestart": " cd ./client && npm run build && cd ../server && npm run build",
+    "prestart": " cd ./client && npm run build",
     "react": "cd ./client && npm run dev",
     "seed": "cd ./server && npm run seed",
     "start": "cd ./server && npm start"
