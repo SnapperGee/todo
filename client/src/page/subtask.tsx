@@ -1,8 +1,8 @@
-export const SubtaskEditor = () =>
+export const Subtask = () =>
 (
     <>
         <h1>Subtask Editor/Creator page</h1>
     </>
 );
 
-export default SubtaskEditor;
+export default Subtask;
