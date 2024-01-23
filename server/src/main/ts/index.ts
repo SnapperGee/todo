@@ -20,7 +20,7 @@ try
 }
 catch (error)
 {
-    console.error(error);
+    console.error(`${error}\n\nDb connection failed.`);
 }
 
 if (process.env.NODE_ENV === "development")
