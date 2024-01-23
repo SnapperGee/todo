@@ -11,7 +11,7 @@ export const resolvers =
             await User.findById(id),
 
         task: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
-            await Task.findById(id),
+            await Task.findById(id).populate("user"),
 
         tasks: async (_parent: unknown, {id}: {id: string}): Promise<Types.DocumentArray<ITask> | undefined> =>
             (await User.findById(id))?.tasks,
