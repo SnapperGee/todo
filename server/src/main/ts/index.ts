@@ -15,7 +15,7 @@ const startApolloServer = async () =>
     await apolloServer.start();
     app.use('/graphql', expressMiddleware(apolloServer));
 
-    db.once("open", () => {
+    db.startSession().then(() => {
         if (process.env.NODE_ENV === "development")
         {
             app.listen(process.env.PORT, () =>
