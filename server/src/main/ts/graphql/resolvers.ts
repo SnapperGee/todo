@@ -1,5 +1,6 @@
 import { User, IUser } from "../model/user.js";
 import { Task, ITask } from "../model/task.js";
+import { GraphQLError } from "graphql";
 
 export const resolvers =
 {
@@ -8,8 +9,15 @@ export const resolvers =
         user: async (_parent: unknown, {id}: {id: string}): Promise<typeof User | null> =>
             await User.findById(id).populate("tasks"),
 
-        loggedInUser: async (_parent: unknown, _args: unknown, context: {user: {_id: string}}): Promise<typeof User | null> =>
-            await User.findById(context.user._id).populate("tasks"),
+        loggedInUser: async (_parent: unknown, _args: unknown, context: {user?: {_id: string}}): Promise<typeof User | null> =>
+        {
+            if (context.user)
+            {
+                await User.findById(context.user._id).populate("tasks")
+            }
+
+            throw new GraphQLError(`${resolvers.Query.loggedInUser.name}: Not logged in`);
+        },
 
         task: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
             await Task.findById(id).populate("user"),
@@ -17,8 +25,15 @@ export const resolvers =
         tasks: async (_parent: unknown, {id}: {id: string}): Promise<ITask[] | undefined> =>
             await Task.find({user: id}).populate("user"),
 
-        tasksOfLoggedInUser: async (_parent: unknown, _args: unknown, context: {user: {_id: string}}): Promise<ITask[] | undefined> =>
-            await Task.find({user: context.user._id}).populate("user")
+        tasksOfLoggedInUser: async (_parent: unknown, _args: unknown, context: {user?: {_id: string}}): Promise<ITask[] | undefined> =>
+        {
+            if (context.user)
+            {
+                await Task.find({user: context.user._id}).populate("user")
+            }
+
+            throw new GraphQLError(`${resolvers.Query.tasksOfLoggedInUser.name}: Not logged in`);
+        }
     },
 
     Mutation:
@@ -31,6 +46,18 @@ export const resolvers =
             const createdTask = await Task.create({user: userId, title, schedule});
             User.findByIdAndUpdate(createdTask.user, { $push: {tasks: createdTask} });
             return createdTask;
+        },
+
+        createLoggedInUserTask: async (_parent: unknown, {title, schedule}: {title: string, schedule: string}, context: {user?: {_id: string}}): Promise<ITask> =>
+        {
+            if (context.user)
+            {
+                const createdTask = await Task.create({user: context.user._id, title, schedule});
+                User.findByIdAndUpdate(createdTask.user, { $push: {tasks: createdTask} });
+                return createdTask;
+            }
+
+            throw new GraphQLError(`${resolvers.Mutation.createLoggedInUserTask.name}: Not logged in`);
         },
 
         deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<IUser | null> =>
@@ -49,6 +76,16 @@ export const resolvers =
 
         setUsername: async (_parent: unknown, {id, username}: {id: string, username: string}): Promise<typeof User | null> =>
             await User.findByIdAndUpdate(id, {username}, {new: true}),
+
+        setLoggedInUsername: async (_parent: unknown, {username}: {username: string}, context: {user: {_id: string}}): Promise<typeof User | null> =>
+        {
+            if (context.user)
+            {
+                await User.findByIdAndUpdate(context.user._id, {username}, {new: true})
+            }
+
+            throw new GraphQLError(`${resolvers.Mutation.setLoggedInUsername.name}: Not logged in`);
+        },
 
         setTaskTitle: async (_parent: unknown, {id, title}: {id: string, title: string}): Promise<typeof Task | null> =>
             await Task.findByIdAndUpdate(id, {title}, {new: true}),
