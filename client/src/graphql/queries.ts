@@ -8,106 +8,45 @@ export const GET_USER = gql`
             tasks {
                 _id
                 title
-                subtasks {
-                    _id
-                    title
-                    accomplished
-                }
+                accomplished
+                schedule
             }
             accomplishedTasks {
                 _id
                 title
-                subtasks {
-                    _id
-                    title
-                    accomplished
-                }
+                accomplished
+                schedule
             }
             pendingTasks {
                 _id
                 title
-                subtasks {
-                    _id
-                    title
-                    accomplished
-                }
+                accomplished
+                schedule
             }
         }
     }
 `;
 
 export const GET_TASK = gql`
-    query getTask($id: ID!) {
-        task(id: $id) {
+    query getTask($taskId: ID!) {
+        task(taskId: $taskId) {
             _id
             user
             title
             accomplished
             schedule
-            subTasks {
-                _id
-                title
-                accomplished
-            }
-            accomplishedSubtasks {
-                _id
-                title
-                accomplished
-            }
-            pendingSubtasks {
-                _id
-                title
-                accomplished
-            }
-        }
-    }
-`;
-
-export const GET_SUBTASK = gql`
-    query getSubtask($taskId: ID!, $subtaskId: ID!) {
-        subtask(taskId: $taskId, subtaskId: $subtaskId) {
-            _id
-            task
-            title
-            accomplished
         }
     }
 `;
 
 export const GET_TASKS = gql`
-    query getTasks($id: ID!) {
-        tasks(id: $id) {
+    query getTasks($userId: ID!) {
+        tasks(userId: $userId) {
             _id
             user
             title
             accomplished
             schedule
-            subTasks {
-                _id
-                title
-                accomplished
-            }
-            accomplishedSubtasks {
-                _id
-                title
-                accomplished
-            }
-            pendingTasks {
-                _id
-                title
-                accomplished
-            }
-        }
-    }
-`;
-
-export const GET_SUBTASKS = gql`
-    query getSubtasks($id: ID!) {
-        subtasks(id: $id) {
-            _id
-            task
-            title
-            accomplished
         }
     }
 `;

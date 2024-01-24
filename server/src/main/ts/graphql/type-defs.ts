@@ -17,42 +17,24 @@ export const typeDefs =
         title: String!
         accomplished: Boolean!
         schedule: String!
-        subtasks: [Subtask]!
-        hasSubtasks: Boolean!
-        accomplishedSubtasks: [Subtask]!
-        pendingSubtasks: [Subtask]!
-    }
-
-    type Subtask
-    {
-        _id: ID!
-        task: Task!
-        title: String!
-        accomplished: Boolean!
     }
 
     type Query
     {
-        user(id: ID!): User
-        task(id: ID!): Task
-        tasks(id: ID!): [Task]
-        subtask(taskId: ID!, subtaskId: ID!): Subtask
-        subtasks(taskId: ID!): [Subtask]
+        user(userId: ID!): User
+        task(taskId: ID!): Task
+        tasks(userId: ID!): [Task]
     }
 
     type Mutation
     {
         createUser(username: String!, password: String!): User!
         createTask(userId: ID!, title: String!, schedule: String!): Task!
-        createSubtask(taskId: ID!, title: String!): Task
-        deleteUser(id: ID!): User
-        deleteTask(id: ID!): Task
-        deleteSubtask(taskId: ID!, subtaskId: ID!): Subtask
-        setUsername(id: ID!, username: String!): User
-        setTaskTitle(id: ID!, title: String!): Task
-        setSubtaskTitle(taskId: ID!, subtaskId: ID!, title: String!): Subtask
-        setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
-        setSubtaskAccomplished(taskId: ID!, subtaskId: ID!, accomplished: Boolean!): Subtask
+        deleteUser(userId: ID!): User
+        deleteTask(taskId: ID!): Task
+        setUsername(userId: ID!, username: String!): User
+        setTaskTitle(taskId: ID!, title: String!): Task
+        setTaskAccomplished(taskId: ID!, accomplished: Boolean!): Task
     }
 `;
 
