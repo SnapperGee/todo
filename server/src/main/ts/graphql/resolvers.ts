@@ -43,7 +43,7 @@ export const resolvers =
         deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<IUser | null> =>
         {
             const deletedUser = await User.findByIdAndDelete(id);
-            await Task.deleteMany({user: id});
+            await Task.deleteMany({user: deletedUser?._id});
             return deletedUser;
         },
 
