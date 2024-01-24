@@ -6,7 +6,7 @@ export const resolvers =
     Query:
     {
         user: async (_parent: unknown, {id}: {id: string}): Promise<typeof User | null> =>
-            await User.findById(id),
+            await User.findById(id).populate("tasks"),
 
         task: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
             await Task.findById(id).populate("user"),
