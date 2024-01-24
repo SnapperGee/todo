@@ -47,8 +47,12 @@ export const resolvers =
             return deletedUser;
         },
 
-        deleteTask: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
-            await Task.findByIdAndDelete(id),
+        deleteTask: async (_parent: unknown, {id}: {id: string}): Promise<ITask | null> =>
+        {
+            const deletedTask = await Task.findByIdAndDelete(id);
+            await User.findByIdAndUpdate(deletedTask?.user, { $pull: {tasks: deletedTask?._id} });
+            return deletedTask;
+        },
 
         deleteSubtask: async (_parent: unknown, {taskId, subtaskId}: {taskId: string, subtaskId: string}): Promise<ISubtask | undefined> =>
             (await Task.findById(taskId))?.subtasks.id(subtaskId)?.deleteOne(),
