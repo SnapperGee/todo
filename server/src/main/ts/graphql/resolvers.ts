@@ -40,8 +40,12 @@ export const resolvers =
             );
         },
 
-        deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<typeof User | null> =>
-            await User.findByIdAndDelete(id),
+        deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<IUser | null> =>
+        {
+            const deletedUser = await User.findByIdAndDelete(id);
+            await Task.deleteMany({user: id});
+            return deletedUser;
+        },
 
         deleteTask: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
             await Task.findByIdAndDelete(id),
