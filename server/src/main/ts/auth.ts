@@ -25,6 +25,7 @@ const authMiddleWare = (req: RequestWithUserPayload, res: Response, next: NextFu
     catch(error)
     {
       console.error("%s\n\nAuth error", error);
+      res.status(401).json({message: "Auth error"});
     }
 
     // return the request object so it can be passed to the resolver as `context`
