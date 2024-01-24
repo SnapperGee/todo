@@ -1,3 +1,4 @@
+import { subtaskSchema, ISubtask } from "./subtask.js";
 import { Schema, model, Types } from "mongoose";
 
 export interface ITask
@@ -6,6 +7,7 @@ export interface ITask
     title: string;
     accomplished: boolean;
     schedule: Date;
+    subtasks: Types.DocumentArray<ISubtask>;
 }
 
 export const taskSchema = new Schema<ITask>(
@@ -34,6 +36,10 @@ export const taskSchema = new Schema<ITask>(
         schedule: {
             type: Date,
             required: [true, "Task schedule is required."]
+        },
+        subtasks: {
+            type: [subtaskSchema],
+            default: []
         }
     },
     {
@@ -42,6 +48,18 @@ export const taskSchema = new Schema<ITask>(
         },
     }
 );
+
+taskSchema.virtual("hasSubtasks").get(function(): boolean {
+    return this.subtasks.length !== 0;
+});
+
+taskSchema.virtual("accomplishedSubtasks").get(function() {
+    return this.subtasks.filter(subtask => subtask.accomplished);
+});
+
+taskSchema.virtual("pendingSubtasks").get(function() {
+    return this.subtasks.filter(subtask => ! subtask.accomplished);
+});
 
 export const Task = model<ITask>("Task", taskSchema);
 
