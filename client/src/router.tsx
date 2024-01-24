@@ -1,7 +1,8 @@
 import App from "./app";
 import Error from "./page/error";
 import Login from "./page/login";
-import Task from "./page/task";
+import TaskEditor from "./page/task-editor";
+import Subtask from "./page/subtask";
 import Signup from "./page/signup";
 import TasksViewer from "./page/tasks-viewer";
 import { createBrowserRouter } from "react-router-dom";
@@ -17,8 +18,12 @@ export const router = createBrowserRouter([
           element: <Login />,
         },
         {
-          path: "task",
-          element: <Task />,
+          path: "taskeditor",
+          element: <TaskEditor />,
+        },
+        {
+          path: "subtask",
+          element: <Subtask />,
         },
         {
           path: "signup",

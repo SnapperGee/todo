@@ -1,8 +1,8 @@
-export const Task = () =>
+export const TaskEditor = () =>
 (
     <>
         <h1>Task Editor/Creator page</h1>
     </>
 );
 
-export default Task;
+export default TaskEditor;
