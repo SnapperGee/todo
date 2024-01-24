@@ -16,7 +16,7 @@ export const resolvers =
                 await User.findById(context.user._id).populate("tasks")
             }
 
-            throw new GraphQLError(`${resolvers.Query.loggedInUser.name}: Not logged in`);
+            throw new GraphQLError(`${resolvers.Query.loggedInUser.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
         },
 
         task: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
@@ -32,7 +32,7 @@ export const resolvers =
                 await Task.find({user: context.user._id}).populate("user")
             }
 
-            throw new GraphQLError(`${resolvers.Query.tasksOfLoggedInUser.name}: Not logged in`);
+            throw new GraphQLError(`${resolvers.Query.tasksOfLoggedInUser.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
         }
     },
 
@@ -57,7 +57,7 @@ export const resolvers =
                 return createdTask;
             }
 
-            throw new GraphQLError(`${resolvers.Mutation.createLoggedInUserTask.name}: Not logged in`);
+            throw new GraphQLError(`${resolvers.Mutation.createLoggedInUserTask.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
         },
 
         deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<IUser | null> =>
@@ -84,7 +84,7 @@ export const resolvers =
                 await User.findByIdAndUpdate(context.user._id, {username}, {new: true})
             }
 
-            throw new GraphQLError(`${resolvers.Mutation.setLoggedInUsername.name}: Not logged in`);
+            throw new GraphQLError(`${resolvers.Mutation.setLoggedInUsername.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
         },
 
         setTaskTitle: async (_parent: unknown, {id, title}: {id: string, title: string}): Promise<typeof Task | null> =>
