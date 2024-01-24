@@ -8,6 +8,9 @@ export const resolvers =
         user: async (_parent: unknown, {id}: {id: string}): Promise<typeof User | null> =>
             await User.findById(id).populate("tasks"),
 
+        loggedInUser: async (_parent: unknown, _args: unknown, context: {user: {_id: string}}): Promise<typeof User | null> =>
+            await User.findById(context.user._id).populate("tasks"),
+
         task: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
             await Task.findById(id).populate("user"),
 
