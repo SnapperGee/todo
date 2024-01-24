@@ -1,7 +1,5 @@
 import { User, IUser } from "../model/user.js";
 import { Task, ITask } from "../model/task.js";
-import { ISubtask } from "../model/subtask.js";
-import { Types } from "mongoose";
 
 export const resolvers =
 {
@@ -14,13 +12,7 @@ export const resolvers =
             await Task.findById(id).populate("user"),
 
         tasks: async (_parent: unknown, {id}: {id: string}): Promise<ITask[] | undefined> =>
-            await Task.find({user: id}).populate("user"),
-
-        subtask: async (_parent: unknown, {userId: taskId, subtaskId}: {userId: string, subtaskId: string}): Promise<ISubtask | null | undefined> =>
-            (await Task.findById(taskId))?.subtasks.id(subtaskId),
-
-        subtasks: async (_parent: unknown, {id}: {id: string}): Promise<Types.DocumentArray<ISubtask> | undefined> =>
-            (await Task.findById(id))?.subtasks
+            await Task.find({user: id}).populate("user")
     },
 
     Mutation:
@@ -30,15 +22,6 @@ export const resolvers =
 
         createTask: async (_parent: unknown, {userId, title, schedule}: {userId: string, title: string, schedule: string}): Promise<ITask> =>
             await Task.create({user: userId, title, schedule}),
-
-        createSubtask: async (_parent: unknown, {taskId, title}: {taskId: string, title: string}): Promise<ITask | null> =>
-        {
-            return await Task.findByIdAndUpdate(
-                taskId,
-                { $push: {subtasks: {title}} },
-                { new: true }
-            );
-        },
 
         deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<IUser | null> =>
         {
@@ -54,23 +37,14 @@ export const resolvers =
             return deletedTask;
         },
 
-        deleteSubtask: async (_parent: unknown, {taskId, subtaskId}: {taskId: string, subtaskId: string}): Promise<ISubtask | undefined> =>
-            (await Task.findById(taskId))?.subtasks.id(subtaskId)?.deleteOne(),
-
         setUsername: async (_parent: unknown, {id, username}: {id: string, username: string}): Promise<typeof User | null> =>
             await User.findByIdAndUpdate(id, {username}, {new: true}),
 
         setTaskTitle: async (_parent: unknown, {id, title}: {id: string, title: string}): Promise<typeof Task | null> =>
             await Task.findByIdAndUpdate(id, {title}, {new: true}),
 
-        setSubtaskTitle: async (_parent: unknown, {taskId, subtaskId, title}: {taskId: string, subtaskId: string, title: string}): Promise<ISubtask | undefined> =>
-            (await Task.findById(taskId))?.subtasks.id(subtaskId)?.set({title}),
-
         setTaskAccomplished: async (_parent: unknown, {id, accomplished}: {id: string, accomplished: boolean}): Promise<typeof Task | null> =>
-            await Task.findByIdAndUpdate(id, {accomplished}, {new: true}),
-
-        setSubtaskAccomplished: async (_parent: unknown, {taskId, subtaskId, accomplished}: {taskId: string, subtaskId: string, accomplished: boolean}): Promise<ISubtask | undefined> =>
-            (await Task.findById(taskId))?.subtasks.id(subtaskId)?.set({accomplished})
+            await Task.findByIdAndUpdate(id, {accomplished}, {new: true})
     }
   };
 

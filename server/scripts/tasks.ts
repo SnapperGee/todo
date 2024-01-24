@@ -1,5 +1,4 @@
 import users from "./users.js";
-import { ISubtask } from "./subtasks.js";
 import { Types } from "mongoose";
 
 export interface ITask
@@ -9,7 +8,6 @@ export interface ITask
     title: string;
     accomplished: boolean;
     schedule: Date;
-    subtasks: ISubtask[];
 }
 
 export const tasks: ITask[] = users.filter(() => [1,2,3,4,5][Math.floor(Math.random() * 5)] % 2 !== 0).reduce((acc: ITask[], user) =>
@@ -21,8 +19,7 @@ export const tasks: ITask[] = users.filter(() => [1,2,3,4,5][Math.floor(Math.ran
                 user: user._id,
                 title: `${user.username}'s task ${iteration}`,
                 accomplished: Math.random() >= 0.5,
-                schedule: new Date(Math.random() * Date.now()),
-                subtasks: []
+                schedule: new Date(Math.random() * Date.now())
             });
         }
 
