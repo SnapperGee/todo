@@ -21,7 +21,11 @@ export const resolvers =
             await User.create({username, password}),
 
         createTask: async (_parent: unknown, {userId, title, schedule}: {userId: string, title: string, schedule: string}): Promise<ITask> =>
-            await Task.create({user: userId, title, schedule}),
+        {
+            const createdTask = await Task.create({user: userId, title, schedule});
+            User.findByIdAndUpdate(createdTask.user, { $push: {tasks: createdTask} });
+            return createdTask;
+        },
 
         deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<IUser | null> =>
         {
