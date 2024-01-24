@@ -13,8 +13,8 @@ export const resolvers =
         task: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
             await Task.findById(id).populate("user"),
 
-        tasks: async (_parent: unknown, {id}: {id: string}): Promise<Types.DocumentArray<ITask> | undefined> =>
-            (await User.findById(id))?.tasks,
+        tasks: async (_parent: unknown, {id}: {id: string}): Promise<ITask[] | undefined> =>
+            (await Task.find({user: id})),
 
         subtask: async (_parent: unknown, {userId: taskId, subtaskId}: {userId: string, subtaskId: string}): Promise<ISubtask | null | undefined> =>
             (await Task.findById(taskId))?.subtasks.id(subtaskId),
