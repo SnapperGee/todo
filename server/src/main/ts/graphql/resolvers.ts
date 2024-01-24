@@ -14,7 +14,7 @@ export const resolvers =
             await Task.findById(id).populate("user"),
 
         tasks: async (_parent: unknown, {id}: {id: string}): Promise<ITask[] | undefined> =>
-            (await Task.find({user: id})),
+            await Task.find({user: id}).populate("user"),
 
         subtask: async (_parent: unknown, {userId: taskId, subtaskId}: {userId: string, subtaskId: string}): Promise<ISubtask | null | undefined> =>
             (await Task.findById(taskId))?.subtasks.id(subtaskId),
