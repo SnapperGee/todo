@@ -15,7 +15,10 @@ export const resolvers =
             await Task.findById(id).populate("user"),
 
         tasks: async (_parent: unknown, {id}: {id: string}): Promise<ITask[] | undefined> =>
-            await Task.find({user: id}).populate("user")
+            await Task.find({user: id}).populate("user"),
+
+        tasksOfLoggedInUser: async (_parent: unknown, _args: unknown, context: {user: {_id: string}}): Promise<ITask[] | undefined> =>
+            await Task.find({user: context.user._id}).populate("user")
     },
 
     Mutation:
