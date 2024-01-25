@@ -2,7 +2,7 @@ import { Schema, model, Types } from "mongoose";
 
 export interface ITask
 {
-    user: Schema.Types.ObjectId;
+    user: Types.ObjectId;
     title: string;
     accomplished: boolean;
     schedule: Date;
