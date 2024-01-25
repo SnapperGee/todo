@@ -1,11 +1,14 @@
 import { typeDefs } from "./graphql/type-defs.js";
 import { resolvers } from "./graphql/resolvers.js";
+import { authMiddleware } from "./auth.js";
 import { app } from "./server.js";
 import db from "./connection.js";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 
-const apolloServer = new ApolloServer({
+interface ApolloContext {user?: {_id: string}}
+
+const apolloServer = new ApolloServer<Readonly<ApolloContext>>({
     typeDefs,
     resolvers,
 });

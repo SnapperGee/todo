@@ -6,7 +6,7 @@ export interface RequestWithUserPayload extends Request
     user: string | JwtPayload;
 }
 
-const authMiddleWare = (req: RequestWithUserPayload, res: Response, next: NextFunction) =>
+export const authMiddleware = (req: RequestWithUserPayload, res: Response, next: NextFunction) =>
 {
     // allows token to be sent via req.body, req.query, or headers
     const token = req.headers.authorization?.substring("Bearer ".length);
@@ -32,7 +32,7 @@ const authMiddleWare = (req: RequestWithUserPayload, res: Response, next: NextFu
     return req;
 };
 
-const signToken = (_id: string, username: string) =>
+export const signToken = (_id: string, username: string) =>
 {
     const user = { _id, username };
     return jwt.sign({ user }, process.env.JWT_SECRET!);
