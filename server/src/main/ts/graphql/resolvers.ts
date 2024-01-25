@@ -40,6 +40,9 @@ export const resolvers =
         setUsername: async (_parent: unknown, {id, username}: {id: string, username: string}): Promise<typeof User | null> =>
             await User.findByIdAndUpdate(id, {username}, {new: true, runValidators: true}),
 
+        setPassword: async (_parent: unknown, {id, password}: {id: string, password: string}): Promise<typeof User | null> =>
+            await User.findByIdAndUpdate(id, {password}, {new: true, runValidators: true}),
+
         setTaskTitle: async (_parent: unknown, {id, title}: {id: string, title: string}): Promise<typeof Task | null> =>
             await Task.findByIdAndUpdate(id, {title}, {new: true, runValidators: true}),
 

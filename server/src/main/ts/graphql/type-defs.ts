@@ -33,6 +33,7 @@ export const typeDefs =
         deleteUser(id: ID!): User
         deleteTask(id: ID!): Task
         setUsername(id: ID!, username: String!): User
+        setPassword(id: ID!, password: String!): User
         setTaskTitle(id: ID!, title: String!): Task
         setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
     }
