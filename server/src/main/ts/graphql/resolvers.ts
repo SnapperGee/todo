@@ -1,5 +1,6 @@
 import { User, IUser } from "../model/user.js";
 import { Task, ITask } from "../model/task.js";
+import type { ApolloContext } from "../index.js";
 import { GraphQLError } from "graphql";
 
 export const resolvers =
@@ -9,7 +10,7 @@ export const resolvers =
         user: async (_parent: unknown, {id}: {id: string}): Promise<typeof User | null> =>
             await User.findById(id).populate("tasks"),
 
-        loggedInUser: async (_parent: unknown, _args: unknown, context: {user?: {_id: string}}): Promise<typeof User | null> =>
+        loggedInUser: async (_parent: unknown, _args: unknown, context: ApolloContext): Promise<typeof User | null> =>
         {
             if (context.user)
             {
@@ -25,7 +26,7 @@ export const resolvers =
         tasks: async (_parent: unknown, {id}: {id: string}): Promise<ITask[] | undefined> =>
             await Task.find({user: id}).populate("user"),
 
-        tasksOfLoggedInUser: async (_parent: unknown, _args: unknown, context: {user?: {_id: string}}): Promise<ITask[] | undefined> =>
+        tasksOfLoggedInUser: async (_parent: unknown, _args: unknown, context: ApolloContext): Promise<ITask[] | undefined> =>
         {
             if (context.user)
             {
@@ -48,7 +49,7 @@ export const resolvers =
             return createdTask;
         },
 
-        createLoggedInUserTask: async (_parent: unknown, {title, schedule}: {title: string, schedule: string}, context: {user?: {_id: string}}): Promise<ITask> =>
+        createLoggedInUserTask: async (_parent: unknown, {title, schedule}: {title: string, schedule: string}, context: ApolloContext): Promise<ITask> =>
         {
             if (context.user)
             {
