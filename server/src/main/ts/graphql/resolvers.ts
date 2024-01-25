@@ -38,13 +38,13 @@ export const resolvers =
         },
 
         setUsername: async (_parent: unknown, {id, username}: {id: string, username: string}): Promise<typeof User | null> =>
-            await User.findByIdAndUpdate(id, {username}, {new: true}),
+            await User.findByIdAndUpdate(id, {username}, {new: true, runValidators: true}),
 
         setTaskTitle: async (_parent: unknown, {id, title}: {id: string, title: string}): Promise<typeof Task | null> =>
-            await Task.findByIdAndUpdate(id, {title}, {new: true}),
+            await Task.findByIdAndUpdate(id, {title}, {new: true, runValidators: true}),
 
         setTaskAccomplished: async (_parent: unknown, {id, accomplished}: {id: string, accomplished: boolean}): Promise<typeof Task | null> =>
-            await Task.findByIdAndUpdate(id, {accomplished}, {new: true})
+            await Task.findByIdAndUpdate(id, {accomplished}, {new: true, runValidators: true})
     }
   };
 
