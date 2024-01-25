@@ -64,7 +64,6 @@ userSchema.pre<UpdateQuery<typeof userSchema>>("findOneAndUpdate", async functio
     {
         update.password = await bcrypt.hash(update.password, 10);
     }
-    next();
 });
 
 userSchema.pre("insertMany", async function(_next, docs)

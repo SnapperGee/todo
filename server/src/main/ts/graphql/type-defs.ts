@@ -30,12 +30,12 @@ export const typeDefs =
     {
         createUser(username: String!, password: String!): User!
         createTask(userId: ID!, title: String!, schedule: String!): Task!
-        deleteUser(id: ID!): User
-        deleteTask(id: ID!): Task
-        setUsername(id: ID!, username: String!): User
-        setPassword(id: ID!, password: String!): User
-        setTaskTitle(id: ID!, title: String!): Task
-        setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
+        deleteUser(id: ID!): User!
+        deleteTask(id: ID!): Task!
+        setUsername(id: ID!, username: String!): User!
+        setPassword(id: ID!, password: String!): User!
+        setTaskTitle(id: ID!, title: String!): Task!
+        setTaskAccomplished(id: ID!, accomplished: Boolean!): Task!
     }
 `;
 
