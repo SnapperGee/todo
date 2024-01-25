@@ -1,5 +1,5 @@
 import { taskSchema, ITask } from "./task.js";
-import { Schema, model, Types } from "mongoose";
+import { Schema, Model, model, Types } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface IUser
@@ -11,7 +11,14 @@ export interface IUser
     pendingTasks: Types.DocumentArray<ITask>;
 }
 
-const userSchema = new Schema<IUser>(
+export interface IUserMethods
+{
+    isCorrectPassword(aString: string): Promise<boolean>;
+}
+
+type UserModel = Model<IUser, {}, IUserMethods>;
+
+const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     {
         username: {
             type: String,
@@ -71,6 +78,6 @@ userSchema.virtual("pendingTasks").get(function() {
     return this.tasks.filter(task => ! task.accomplished);
 });
 
-export const User = model<IUser>("User", userSchema);
+export const User = model<IUser, UserModel>("User", userSchema);
 
 export default User;
