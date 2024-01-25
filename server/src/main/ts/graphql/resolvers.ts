@@ -1,6 +1,7 @@
 import { User, IUser } from "../model/user.js";
 import { Task, ITask } from "../model/task.js";
 import type { ApolloContext } from "../index.js";
+import jwt from "jsonwebtoken";
 import { GraphQLError } from "graphql";
 
 export const resolvers =
@@ -39,10 +40,11 @@ export const resolvers =
 
     Mutation:
     {
-        createUser: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<{token: ApolloContext, user: IUser}> =>
+        createUser: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<{token: string, user: IUser}> =>
         {
             const user = await User.create({username, password})
-            const token = {user: {_id: user._id}};
+            const userToken = {user: {_id: user._id}};
+            const token = jwt.sign(userToken, process.env.JWT_SECRET!);
             return {token, user}
         },
 
