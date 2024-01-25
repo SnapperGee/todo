@@ -26,7 +26,7 @@ export const authMiddleware = (req: RequestWithUserPayload, _res: Response, next
         throw new GraphQLError("Auth error",
             {
                 extensions: {
-                code: 'UNAUTHENTICATED',
+                code: "UNAUTHENTICATED",
                 http: { status: 401 },
                 cause: error
                 }
