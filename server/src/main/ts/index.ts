@@ -5,7 +5,7 @@ import db from "./connection.js";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 
-interface ApolloContext {readonly user?: {readonly _id: string}}
+export interface ApolloContext {readonly user?: {readonly _id: string}}
 
 const apolloServer = new ApolloServer<Readonly<ApolloContext>>({
     typeDefs,
