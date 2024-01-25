@@ -40,6 +40,25 @@ export const resolvers =
 
     Mutation:
     {
+        login: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<{token: string, user: IUser}> =>
+        {
+            const user = await User.findOne({username});
+
+            if ( ! user)
+            {
+                throw new GraphQLError(`${resolvers.Mutation.login.name}: User not found`, {extensions: {code: "USERNOTFOUND"}});
+            }
+
+            if ( ! await user.isCorrectPassword(password))
+            {
+                throw new GraphQLError(`${resolvers.Mutation.login.name}: Invalid password`, {extensions: {code: "PASSWORDAUTH"}});
+            }
+
+            const userToken = {user: {_id: user._id}};
+            const token = jwt.sign(userToken, process.env.JWT_SECRET!);
+            return {token, user};
+        },
+
         createUser: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<{token: string, user: IUser}> =>
         {
             const user = await User.create({username, password})
