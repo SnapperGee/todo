@@ -28,8 +28,5 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "dependencies": {
-    "@material/web": "^1.1.1"
   }
 }
