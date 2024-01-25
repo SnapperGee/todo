@@ -39,8 +39,12 @@ export const resolvers =
 
     Mutation:
     {
-        createUser: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<IUser> =>
-            await User.create({username, password}),
+        createUser: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<{token: ApolloContext, user: IUser}> =>
+        {
+            const user = await User.create({username, password})
+            const token = {user: {_id: user._id}};
+            return {token, user}
+        },
 
         createTask: async (_parent: unknown, {userId, title, schedule}: {userId: string, title: string, schedule: string}): Promise<ITask> =>
         {

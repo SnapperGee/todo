@@ -2,10 +2,11 @@ import { typeDefs } from "./graphql/type-defs.js";
 import { resolvers } from "./graphql/resolvers.js";
 import { app } from "./server.js";
 import db from "./connection.js";
+import { Types } from "mongoose";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 
-export interface ApolloContext {readonly user?: {readonly _id: string}}
+export interface ApolloContext {readonly user?: {readonly _id: Types.ObjectId}}
 
 const apolloServer = new ApolloServer<Readonly<ApolloContext>>({
     typeDefs,
