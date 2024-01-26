@@ -30,6 +30,8 @@
     "concurrently": "^8.2.2"
   },
   "dependencies": {
+    "@material/checkbox": "^14.0.0",
+    "@material/form-field": "^14.0.0",
     "@material/web": "^1.1.1"
   }
 }
