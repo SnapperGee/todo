@@ -24,11 +24,7 @@ export const resolvers =
             await Task.create({user: userId, title, schedule}),
 
         deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<IUser | null> =>
-        {
-            const deletedUser = await User.findByIdAndDelete(id);
-            await Task.deleteMany({user: deletedUser?._id});
-            return deletedUser;
-        },
+            await User.findByIdAndDelete(id),
 
         deleteTask: async (_parent: unknown, {id}: {id: string}): Promise<ITask | null> =>
             await Task.findByIdAndDelete(id),
