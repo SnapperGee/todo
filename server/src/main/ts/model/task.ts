@@ -44,6 +44,11 @@ export const taskSchema = new Schema<ITask>(
     }
 );
 
+taskSchema.post("save", async function()
+{
+    await User.findByIdAndUpdate(this.user, { $push: {tasks: this} });
+});
+
 taskSchema.pre<UpdateQuery<typeof taskSchema>>("findOneAndDelete", async function() {
     const deletedTask = await this.model.findOne(this.getFilter());
     await User.findByIdAndUpdate(deletedTask?.user, { $pull: {tasks: {_id: deletedTask?._id}} });
