@@ -31,11 +31,7 @@ export const resolvers =
         },
 
         deleteTask: async (_parent: unknown, {id}: {id: string}): Promise<ITask | null> =>
-        {
-            const deletedTask = await Task.findByIdAndDelete(id);
-            await User.findByIdAndUpdate(deletedTask?.user, { $pull: {tasks: deletedTask?._id} });
-            return deletedTask;
-        },
+            await Task.findByIdAndDelete(id),
 
         setUsername: async (_parent: unknown, {id, username}: {id: string, username: string}): Promise<typeof User | null> =>
             await User.findByIdAndUpdate(id, {username}, {new: true, runValidators: true}),

@@ -1,4 +1,5 @@
-import { Schema, model, Types } from "mongoose";
+import { User } from "./user.js";
+import { Schema, model, Types, UpdateQuery } from "mongoose";
 
 export interface ITask
 {
@@ -42,6 +43,11 @@ export const taskSchema = new Schema<ITask>(
         },
     }
 );
+
+taskSchema.pre<UpdateQuery<typeof taskSchema>>("findOneAndDelete", async function() {
+    const deletedTask = await this.model.findOne(this.getFilter());
+    await User.findByIdAndUpdate(deletedTask?.user, { $pull: {tasks: {_id: deletedTask?._id}} });
+});
 
 export const Task = model<ITask>("Task", taskSchema);
 
