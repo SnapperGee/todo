@@ -1,5 +1,5 @@
-import { taskSchema, ITask } from "./task.js";
-import { Schema, Model, model, Types } from "mongoose";
+import { taskSchema, ITask, Task } from "./task.js";
+import { Schema, Model, model, Types, UpdateQuery } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface IUser
@@ -58,12 +58,25 @@ userSchema.pre("save", async function()
     }
 });
 
+userSchema.pre<UpdateQuery<typeof userSchema>>("findOneAndUpdate", async function() {
+    const update = this.getUpdate();
+    if (update.password)
+    {
+        update.password = await bcrypt.hash(update.password, 10);
+    }
+});
+
 userSchema.pre("insertMany", async function(_next, docs)
 {
     for (const doc of docs)
     {
         doc.password = await bcrypt.hash(doc.password, 10);
     }
+});
+
+userSchema.pre<UpdateQuery<typeof userSchema>>("findOneAndDelete", async function() {
+    const deletedUser = await this.model.findOne(this.getFilter());
+    await Task.deleteMany({user: deletedUser?._id});
 });
 
 userSchema.methods.isCorrectPassword = async function (aString: string) {
