@@ -35,7 +35,7 @@ const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: 'black' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -53,7 +53,7 @@ const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
               textDecoration: 'none',
             }}
           >
-            LOGO
+            TODO
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -107,7 +107,7 @@ const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
               textDecoration: 'none',
             }}
           >
-            LOGO
+            TODO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
