@@ -98,7 +98,7 @@ export const resolvers =
         setPassword: async (_parent: unknown, {id, password}: {id: string, password: string}): Promise<typeof User | null> =>
             await User.findByIdAndUpdate(id, {password}, {new: true, runValidators: true}),
 
-        setLoggedInUsername: async (_parent: unknown, {username}: {username: string}, context: {user: {_id: string}}): Promise<typeof User | null> =>
+        setLoggedInUsername: async (_parent: unknown, {username}: {username: string}, context: ApolloContext): Promise<typeof User | null> =>
         {
             if (context.user)
             {
@@ -107,6 +107,9 @@ export const resolvers =
 
             throw new GraphQLError(`${resolvers.Mutation.setLoggedInUsername.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
         },
+
+        setLoggedInUserPassword: async (_parent: unknown, {password}: {password: string}, context: ApolloContext): Promise<typeof User | null> =>
+            await User.findByIdAndUpdate(context.user?._id, {password}, {new: true, runValidators: true}),
 
         setTaskTitle: async (_parent: unknown, {id, title}: {id: string, title: string}): Promise<typeof Task | null> =>
             await Task.findByIdAndUpdate(id, {title}, {new: true, runValidators: true}),
