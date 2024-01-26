@@ -4,7 +4,6 @@ export const typeDefs =
     {
         _id: ID!
         username: String!
-        password: String!
         tasks: [Task]!
         accomplishedTasks: [Task]!
         pendingTasks: [Task]!
