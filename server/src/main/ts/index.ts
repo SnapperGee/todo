@@ -8,7 +8,8 @@ import { expressMiddleware } from "@apollo/server/express4";
 
 const apolloServer = new ApolloServer<Context>({
     typeDefs,
-    resolvers
+    resolvers,
+    introspection: process.env.NODE_ENV === "development",
 });
 
 await apolloServer.start();
