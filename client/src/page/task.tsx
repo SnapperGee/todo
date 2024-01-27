@@ -22,7 +22,7 @@ const TaskPage: React.FC = () => {
 
   const handleEdit = () => {
     setIsEditing(true);
-    // If you want to pre-populate the form with the existing task data, set the editedTask state here
+    // form for the existing task data
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,8 +36,8 @@ const TaskPage: React.FC = () => {
   };
 
   const handleSave = () => {
-    // You can perform save logic here
-    // For now, let's just log the edited task
+    // perform save logic here
+    // For now just log the edited task
     console.log('Edited Task:', editedTask);
 
     setIsEditing(false);
