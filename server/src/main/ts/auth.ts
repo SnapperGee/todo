@@ -11,7 +11,7 @@ export interface Context
     };
 }
 
-export const authMiddleware = async (req: Request & Context, _res: Response, next: NextFunction): Promise<Request & Context> =>
+export const authMiddleware = async ({req}: {req: Request & Context}): Promise<Context> =>
 {
     const token = req.headers.authorization?.substring("Bearer ".length);
 
@@ -24,7 +24,7 @@ export const authMiddleware = async (req: Request & Context, _res: Response, nex
     {
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as Context;
         req.user = decoded.user;
-        next();
+        return req;
     }
     catch(error)
     {
@@ -38,8 +38,6 @@ export const authMiddleware = async (req: Request & Context, _res: Response, nex
             }
         );
     }
-
-    return req;
 };
 
 export const signToken = (_id: Types.ObjectId, username: string) =>

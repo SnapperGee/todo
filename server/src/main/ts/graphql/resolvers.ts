@@ -14,7 +14,7 @@ export const resolvers =
         {
             if (context.user)
             {
-                await User.findById(context.user._id).populate("tasks")
+                return await User.findById(context.user._id).populate("tasks")
             }
 
             throw new GraphQLError(`${resolvers.Query.loggedInUser.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
@@ -30,7 +30,7 @@ export const resolvers =
         {
             if (context.user)
             {
-                await Task.find({user: context.user._id}).populate("user")
+                return await Task.find({user: context.user._id}).populate("user")
             }
 
             throw new GraphQLError(`${resolvers.Query.tasksOfLoggedInUser.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
@@ -99,7 +99,7 @@ export const resolvers =
         {
             if (context.user)
             {
-                await User.findByIdAndUpdate(context.user._id, {username}, {new: true})
+                return await User.findByIdAndUpdate(context.user._id, {username}, {new: true})
             }
 
             throw new GraphQLError(`${resolvers.Mutation.setLoggedInUsername.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
