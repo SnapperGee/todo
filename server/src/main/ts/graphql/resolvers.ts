@@ -1,7 +1,6 @@
 import { User, IUser } from "../model/user.js";
 import { Task, ITask } from "../model/task.js";
-import type { ApolloContext } from "../index.js";
-import jwt from "jsonwebtoken";
+import { Context, signToken } from "../auth.js";
 import { GraphQLError } from "graphql";
 
 export const resolvers =
@@ -11,7 +10,7 @@ export const resolvers =
         user: async (_parent: unknown, {id}: {id: string}): Promise<typeof User | null> =>
             await User.findById(id).populate("tasks"),
 
-        loggedInUser: async (_parent: unknown, _args: unknown, context: ApolloContext): Promise<typeof User | null> =>
+        loggedInUser: async (_parent: unknown, _args: unknown, context: Context): Promise<typeof User | null> =>
         {
             if (context.user)
             {
@@ -27,7 +26,7 @@ export const resolvers =
         tasks: async (_parent: unknown, {id}: {id: string}): Promise<ITask[] | undefined> =>
             await Task.find({user: id}).populate("user"),
 
-        tasksOfLoggedInUser: async (_parent: unknown, _args: unknown, context: ApolloContext): Promise<ITask[] | undefined> =>
+        tasksOfLoggedInUser: async (_parent: unknown, _args: unknown, context: Context): Promise<ITask[] | undefined> =>
         {
             if (context.user)
             {
@@ -54,16 +53,14 @@ export const resolvers =
                 throw new GraphQLError(`${resolvers.Mutation.login.name}: Invalid password`, {extensions: {code: "PASSWORDAUTH"}});
             }
 
-            const userToken = {user: {_id: user._id}};
-            const token = jwt.sign(userToken, process.env.JWT_SECRET!);
+            const token = signToken(user._id, user.username);
             return {token, user};
         },
 
         createUser: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<{token: string, user: IUser}> =>
         {
             const user = await User.create({username, password})
-            const userToken = {user: {_id: user._id}};
-            const token = jwt.sign(userToken, process.env.JWT_SECRET!);
+            const token = signToken(user._id, user.username);
             return {token, user}
         },
 
@@ -74,7 +71,7 @@ export const resolvers =
             return createdTask;
         },
 
-        createLoggedInUserTask: async (_parent: unknown, {title, schedule}: {title: string, schedule: string}, context: ApolloContext): Promise<ITask> =>
+        createLoggedInUserTask: async (_parent: unknown, {title, schedule}: {title: string, schedule: string}, context: Context): Promise<ITask> =>
         {
             if (context.user)
             {
@@ -98,7 +95,7 @@ export const resolvers =
         setPassword: async (_parent: unknown, {id, password}: {id: string, password: string}): Promise<typeof User | null> =>
             await User.findByIdAndUpdate(id, {password}, {new: true, runValidators: true}),
 
-        setLoggedInUsername: async (_parent: unknown, {username}: {username: string}, context: ApolloContext): Promise<typeof User | null> =>
+        setLoggedInUsername: async (_parent: unknown, {username}: {username: string}, context: Context): Promise<typeof User | null> =>
         {
             if (context.user)
             {
@@ -108,7 +105,7 @@ export const resolvers =
             throw new GraphQLError(`${resolvers.Mutation.setLoggedInUsername.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
         },
 
-        setLoggedInUserPassword: async (_parent: unknown, {password}: {password: string}, context: ApolloContext): Promise<typeof User | null> =>
+        setLoggedInUserPassword: async (_parent: unknown, {password}: {password: string}, context: Context): Promise<typeof User | null> =>
             await User.findByIdAndUpdate(context.user?._id, {password}, {new: true, runValidators: true}),
 
         setTaskTitle: async (_parent: unknown, {id, title}: {id: string, title: string}): Promise<typeof Task | null> =>

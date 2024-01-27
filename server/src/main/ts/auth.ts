@@ -1,13 +1,17 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import { Types } from "mongoose";
 import { GraphQLError } from "graphql";
 import type { Request, Response, NextFunction } from "express";
 
-export interface RequestWithUserPayload extends Request
+export interface Context
 {
-    user: string | JwtPayload;
+    user?: {
+        readonly _id: Types.ObjectId;
+        readonly username: string;
+    };
 }
 
-export const authMiddleware = (req: RequestWithUserPayload, _res: Response, next: NextFunction) =>
+export const authMiddleware = async (req: Request & Context, _res: Response, next: NextFunction): Promise<Request & Context> =>
 {
     const token = req.headers.authorization?.substring("Bearer ".length);
 
@@ -18,7 +22,8 @@ export const authMiddleware = (req: RequestWithUserPayload, _res: Response, next
 
     try
     {
-        req.user = jwt.verify(token, process.env.JWT_SECRET!);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as Context;
+        req.user = decoded.user;
         next();
     }
     catch(error)
@@ -37,7 +42,7 @@ export const authMiddleware = (req: RequestWithUserPayload, _res: Response, next
     return req;
 };
 
-export const signToken = (_id: string, username: string) =>
+export const signToken = (_id: Types.ObjectId, username: string) =>
 {
     const user = { _id, username };
     return jwt.sign({ user }, process.env.JWT_SECRET!);

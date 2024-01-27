@@ -1,21 +1,19 @@
 import { typeDefs } from "./graphql/type-defs.js";
 import { resolvers } from "./graphql/resolvers.js";
 import { app } from "./server.js";
+import { Context, authMiddleware } from "./auth.js";
 import db from "./connection.js";
-import { Types } from "mongoose";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 
-export interface ApolloContext {readonly user?: {readonly _id: Types.ObjectId}}
-
-const apolloServer = new ApolloServer<Readonly<ApolloContext>>({
+const apolloServer = new ApolloServer<Context>({
     typeDefs,
-    resolvers,
+    resolvers
 });
 
 await apolloServer.start();
 
-app.use('/graphql', expressMiddleware(apolloServer));
+app.use('/graphql', expressMiddleware(apolloServer, {context: authMiddleware}));
 
 try
 {
