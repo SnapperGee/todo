@@ -6,6 +6,7 @@ Todo task manager web app server backend.
 [![TypeScript][typescript shield]][typescript website]
 [![Apollo][apollo shield]][apollo website]
 [![GraphQL][graphql shield]][graphql website]
+[![Jwt][jwt shield]][jwt website]
 [![npm][npm shield]][npm website]
 ![Git][git shield]
 [![GitHub][github shield]][github repo]
@@ -18,6 +19,8 @@ Todo task manager web app server backend.
 [apollo website]: https://www.apollographql.com/ "Apollo"
 [graphql shield]: https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white "GraphQL"
 [graphql website]: https://graphql.org/ "GraphQL"
+[jwt shield]: https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens "JSON Web Token"
+[jwt website]: https://jwt.io/ "JSON Web Token"
 [npm shield]: https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white "npm"
 [npm website]: https://www.npmjs.com/ "npm"
 [git shield]: https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white "Git"
