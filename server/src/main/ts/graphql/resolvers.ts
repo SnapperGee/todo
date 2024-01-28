@@ -64,23 +64,14 @@ export const resolvers =
             return {token, user}
         },
 
-        createTask: async (_parent: unknown, {userId, title, schedule}: {userId: string, title: string, schedule: string}): Promise<ITask> =>
-        {
-            const createdTask = await Task.create({user: userId, title, schedule});
-            User.findByIdAndUpdate(createdTask.user, { $push: {tasks: createdTask} });
-            return createdTask;
-        },
-
-        createLoggedInUserTask: async (_parent: unknown, {title, schedule}: {title: string, schedule: string}, context: Context): Promise<ITask> =>
+        createTask: async (_parent: unknown, {title, schedule}: {title: string, schedule: string}, context: Context): Promise<ITask> =>
         {
             if (context.user)
             {
-                const createdTask = await Task.create({user: context.user._id, title, schedule});
-                User.findByIdAndUpdate(createdTask.user, { $push: {tasks: createdTask} });
-                return createdTask;
+                return await Task.create({user: context.user._id, title, schedule});
             }
 
-            throw new GraphQLError(`${resolvers.Mutation.createLoggedInUserTask.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
+            throw new GraphQLError(`${resolvers.Mutation.createTask.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
         },
 
         deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<IUser | null> =>
