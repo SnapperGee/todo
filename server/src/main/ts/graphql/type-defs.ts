@@ -33,7 +33,6 @@ export const typeDefs =
 
     type Mutation
     {
-        deleteUser(id: ID!): User
         deleteTask(id: ID!): Task
         setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
 
@@ -43,6 +42,7 @@ export const typeDefs =
         setPassword(password: String!): User!
         createTask(title: String!, schedule: String!): Task!
         setTaskTitle(title: String!): Task!
+        deleteUser: User
     }
 `;
 

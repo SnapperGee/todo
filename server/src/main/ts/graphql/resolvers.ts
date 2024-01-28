@@ -84,8 +84,15 @@ export const resolvers =
             throw new GraphQLError(`${resolvers.Mutation.createTask.name}: Forbidden operation.`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
         },
 
-        deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<IUser | null> =>
-            await User.findByIdAndDelete(id),
+        deleteUser: async (_parent: unknown, _args: unknown, context: Context): Promise<IUser | null> =>
+        {
+            if (context.user)
+            {
+                return  await User.findByIdAndDelete(context.user._id);
+            }
+
+            throw new GraphQLError(`${resolvers.Mutation.deleteUser.name}: Forbidden operation.`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
+        },
 
         deleteTask: async (_parent: unknown, {id}: {id: string}): Promise<ITask | null> =>
             await Task.findByIdAndDelete(id),
