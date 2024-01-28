@@ -145,18 +145,25 @@ export const resolvers =
             throw new GraphQLError(`${resolvers.Mutation.setPassword.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
         },
 
-        setTaskTitle: async (_parent: unknown, {title}: {id: string, title: string}, context: Context): Promise<typeof Task | null> =>
+        setTaskTitle: async (_parent: unknown, {id, title}: {id: string, title: string}, context: Context): Promise<typeof Task | null> =>
         {
             if (context.user)
             {
-                return await Task.findByIdAndUpdate(context.user?._id, {title}, {new: true, runValidators: true}).populate("user");
+                return await Task.findOneAndUpdate({_id: id, user: context.user?._id}, {title}, {new: true, runValidators: true}).populate("user");
             }
 
             throw new GraphQLError(`${resolvers.Mutation.setTaskTitle.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
         },
 
-        setTaskAccomplished: async (_parent: unknown, {id, accomplished}: {id: string, accomplished: boolean}): Promise<typeof Task | null> =>
-            await Task.findByIdAndUpdate(id, {accomplished}, {new: true, runValidators: true}).populate("user")
+        setTaskAccomplished: async (_parent: unknown, {id, accomplished}: {id: string, accomplished: boolean}, context: Context): Promise<typeof Task | null> =>
+        {
+            if (context.user)
+            {
+                return await Task.findOneAndUpdate({_id: id, user: context.user?._id}, {accomplished}, {new: true, runValidators: true}).populate("user");
+            }
+
+            throw new GraphQLError(`${resolvers.Mutation.setTaskAccomplished.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
+        }
     }
   };
 

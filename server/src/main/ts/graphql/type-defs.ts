@@ -49,7 +49,7 @@ export const typeDefs =
         setUsername(username: String!): User!
         setPassword(password: String!): User!
         createTask(title: String!, schedule: String!): Task!
-        setTaskTitle(title: String!): Task!
+        setTaskTitle(id: ID!, title: String!): Task!
         deleteUser: User
     }
 `;
