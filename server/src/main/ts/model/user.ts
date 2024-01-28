@@ -132,13 +132,13 @@ userSchema.pre("insertMany", async function(_next, docs)
 
 // Delete the user's tasks when the user is deleted.
 userSchema.pre<UpdateQuery<typeof userSchema>>("findOneAndDelete", async function() {
-    const deletedUser = await this.model.findOne(this.getFilter());
-    await Task.deleteMany({user: deletedUser?._id});
+    const userToDelete = await this.model.findOne(this.getFilter());
+    await Task.deleteMany({user: userToDelete?._id});
 });
 
 userSchema.pre<UpdateQuery<typeof userSchema>>("deleteOne", async function() {
-    const deletedUser = await this.model.findOne(this.getFilter());
-    await Task.deleteMany({user: deletedUser?._id});
+    const userToDelete = await this.model.findOne(this.getFilter());
+    await Task.deleteMany({user: userToDelete?._id});
 });
 
 userSchema.pre("deleteOne", {document: true, query: false}, async function() {

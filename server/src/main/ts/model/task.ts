@@ -96,13 +96,13 @@ taskSchema.post("save", async function()
 
 // Delete the task from the user's tasks array when task is deleted via query.
 taskSchema.pre<UpdateQuery<typeof taskSchema>>("findOneAndDelete", async function() {
-    const deletedTask = await this.model.findOne(this.getFilter());
-    await User.findByIdAndUpdate(deletedTask?.user, { $pull: {tasks: {_id: deletedTask?._id}} });
+    const taskToDelete = await this.model.findOne(this.getFilter());
+    await User.findByIdAndUpdate(taskToDelete?.user, { $pull: {tasks: {_id: taskToDelete?._id}} });
 });
 
 taskSchema.pre<UpdateQuery<typeof taskSchema>>("deleteOne", async function() {
-    const deletedTask = await this.model.findOne(this.getFilter());
-    await User.findByIdAndUpdate(deletedTask?.user, { $pull: {tasks: {_id: deletedTask?._id}} });
+    const taskToDelete = await this.model.findOne(this.getFilter());
+    await User.findByIdAndUpdate(taskToDelete?.user, { $pull: {tasks: {_id: taskToDelete?._id}} });
 });
 
 // Delete the task from the user's tasks array when task is deleted via document.
