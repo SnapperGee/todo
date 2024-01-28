@@ -1,6 +1,7 @@
 import { User, IUser } from "../model/user.js";
 import { Task, ITask } from "../model/task.js";
 import { Context, signToken } from "../auth.js";
+import { DeleteResult } from "mongodb";
 import { GraphQLError } from "graphql";
 
 export const resolvers =
@@ -103,6 +104,21 @@ export const resolvers =
                 if (taskToDelete?.user.equals(context.user._id))
                 {
                     return await Task.findByIdAndDelete(taskToDelete._id).populate("user");
+                }
+            }
+
+            throw new GraphQLError(`${resolvers.Mutation.deleteTask.name}: Forbidden operation.`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
+        },
+
+        deleteTasks: async (_parent: unknown, {ids}: {ids: readonly string[]}, context: Context): Promise<DeleteResult | null> =>
+        {
+            if (context.user)
+            {
+                const tasksToDelete = await Task.find({_id: {$in: ids}});
+
+                if (tasksToDelete?.every(taskToDelete => taskToDelete.user.equals(context.user?._id)))
+                {
+                    return await Task.deleteMany({_id: {$in: ids}});
                 }
             }
 

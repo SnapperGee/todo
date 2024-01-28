@@ -31,9 +31,17 @@ export const typeDefs =
         task(id: ID!): Task
     }
 
+    type DeleteResult
+    {
+        n: Int!
+        ok: Int!
+        deletedCount: Int!
+    }
+
     type Mutation
     {
         deleteTask(id: ID!): Task
+        deleteTasks(ids: [ID]!): DeleteResult
         setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
 
         createUser(username: String!, password: String!): Auth!
