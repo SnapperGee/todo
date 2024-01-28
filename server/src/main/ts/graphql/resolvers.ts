@@ -42,12 +42,12 @@ export const resolvers =
 
             if ( ! user)
             {
-                throw new GraphQLError(`${resolvers.Mutation.login.name}: User not found`, {extensions: {code: "USERNOTFOUND"}});
+                throw new GraphQLError(`${resolvers.Mutation.login.name}: Invalid username password combo.`, {extensions: {code: "INVALIDUSERCREDENTIALS", http: {status: 401}}});
             }
 
             if ( ! await user.isCorrectPassword(password))
             {
-                throw new GraphQLError(`${resolvers.Mutation.login.name}: Invalid password`, {extensions: {code: "PASSWORDAUTH"}});
+                throw new GraphQLError(`${resolvers.Mutation.login.name}: Invalid username password combo.`, {extensions: {code: "INVALIDUSERCREDENTIALS", http: {status: 401}}});
             }
 
             const token = signToken(user._id, user.username);
