@@ -1,7 +1,22 @@
+/**
+ * This module contains the User model and its schema. A User has tasks that can
+ * be scheduled and accomplished.
+ *
+ * @module user
+ *
+ * @see {@link task}
+ */
+
 import { taskSchema, ITask, Task } from "./task.js";
 import { Schema, Model, model, Types, UpdateQuery } from "mongoose";
 import bcrypt from "bcrypt";
 
+/**
+ * The interface for the User {@link userSchema schema} and {@link User model}.
+ *
+ * @see {@link userSchema}
+ * @see {@link User}
+ */
 export interface IUser
 {
     username: string;
@@ -18,6 +33,16 @@ export interface IUserMethods
 
 type UserModel = Model<IUser, {}, IUserMethods>;
 
+/**
+ * The schema for the {@link User User model}. Contains the following fields:
+ *
+ * - username: A username string.
+ * - password: A hashed password string.
+ * - tasks: An array of {@link task.taskSchema Task} subdocuments.
+ *
+ * @see {@link IUser}
+ * @see {@link User}
+ */
 const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     {
         username: {
@@ -50,6 +75,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>(
     }
 );
 
+// Hash the password string before saving it to the database.
 userSchema.pre("save", async function()
 {
     if (this.isNew || this.isModified("password"))
@@ -58,6 +84,7 @@ userSchema.pre("save", async function()
     }
 });
 
+// Hash the new password string before updating the database.
 userSchema.pre<UpdateQuery<typeof userSchema>>("findOneAndUpdate", async function() {
     const update = this.getUpdate();
     if (update.password)
@@ -66,6 +93,7 @@ userSchema.pre<UpdateQuery<typeof userSchema>>("findOneAndUpdate", async functio
     }
 });
 
+// Hash the password strings before inserting them into the database.
 userSchema.pre("insertMany", async function(_next, docs)
 {
     for (const doc of docs)
@@ -74,23 +102,37 @@ userSchema.pre("insertMany", async function(_next, docs)
     }
 });
 
+// Delete the user's tasks when the user is deleted.
 userSchema.pre<UpdateQuery<typeof userSchema>>("findOneAndDelete", async function() {
     const deletedUser = await this.model.findOne(this.getFilter());
     await Task.deleteMany({user: deletedUser?._id});
 });
 
+// Return true if the password string matches the stored hashed password string.
 userSchema.methods.isCorrectPassword = async function (aString: string) {
     return bcrypt.compare(aString, this.password);
 };
 
+// Return the user's accomplished tasks.
 userSchema.virtual("accomplishedTasks").get(function() {
     return this.tasks.filter(task => task.accomplished);
 });
 
+// Return the user's pending (not accomplished) tasks.
 userSchema.virtual("pendingTasks").get(function() {
     return this.tasks.filter(task => ! task.accomplished);
 });
 
+/**
+ * The User model of the {@link userSchema}. Contains the following fields:
+ *
+ * - username: A username string.
+ * - password: A hashed password string.
+ * - tasks: An array of {@link task.taskSchema Task} subdocuments.
+ *
+ * @see {@link userSchema}
+ * @see {@link IUser}
+ */
 export const User = model<IUser, UserModel>("User", userSchema);
 
 export default User;
