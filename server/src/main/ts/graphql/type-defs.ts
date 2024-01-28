@@ -43,7 +43,6 @@ export const typeDefs =
         deleteTask(id: ID!): Task
         deleteTasks(ids: [ID]!): DeleteResult
         setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
-
         createUser(username: String!, password: String!): Auth!
         login(username: String!, password: String!): Auth!
         setUsername(username: String!): User!
