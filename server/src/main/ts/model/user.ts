@@ -26,7 +26,7 @@ export interface IUser
     pendingTasks: Types.DocumentArray<ITask>;
 }
 
-export interface IUserMethods
+interface IUserMethods
 {
     isCorrectPassword(aString: string): Promise<boolean>;
 }
