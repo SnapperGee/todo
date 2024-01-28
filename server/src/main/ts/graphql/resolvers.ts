@@ -17,8 +17,24 @@ export const resolvers =
             throw new GraphQLError(`${resolvers.Query.user.name}: Forbidden operation`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
         },
 
-        task: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
-            await Task.findById(id).populate("user"),
+        task: async (_parent: unknown, {id}: {id: string}, context: Context): Promise<typeof Task | null> =>
+        {
+            if (context.user)
+            {
+                const task = await Task.findById(id);
+
+                if ( ! task)
+                {
+                    throw new GraphQLError(`${resolvers.Query.task.name}: Task not found`, {extensions: {code: "NOTFOUND", http: {status: 404}}});
+                }
+                else if (task.user.equals(context.user._id))
+                {
+                    return await Task.findOne({_id: id, user: context.user._id});
+                }
+            }
+
+            throw new GraphQLError(`${resolvers.Query.task.name}: Forbidden operation`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
+        },
 
         tasks: async (_parent: unknown, _args: unknown, context: Context): Promise<ITask[] | undefined> =>
         {
