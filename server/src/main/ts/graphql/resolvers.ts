@@ -11,7 +11,7 @@ export const resolvers =
         {
             if (context.user)
             {
-                return await User.findById(context.user._id).populate("tasks")
+                return await User.findById(context.user._id).populate("tasks");
             }
 
             throw new GraphQLError(`${resolvers.Query.user.name}: Forbidden operation`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
@@ -21,7 +21,7 @@ export const resolvers =
         {
             if (context.user)
             {
-                const task = await Task.findById(id);
+                const task = await Task.findById(id).populate("user");
 
                 if ( ! task)
                 {
@@ -40,7 +40,7 @@ export const resolvers =
         {
             if (context.user)
             {
-                return await Task.find({user: context.user._id}).populate("user")
+                return await Task.find({user: context.user._id}).populate("user");
             }
 
             throw new GraphQLError(`${resolvers.Query.tasks.name}: Forbidden operation.`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
@@ -51,7 +51,7 @@ export const resolvers =
     {
         login: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<{token: string, user: IUser}> =>
         {
-            const user = await User.findOne({username});
+            const user = await User.findOne({username}).populate("tasks");
 
             if ( ! user)
             {
@@ -69,7 +69,7 @@ export const resolvers =
 
         createUser: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<{token: string, user: IUser}> =>
         {
-            const user = await User.create({username, password})
+            const user = await User.create({username, password});
             const token = signToken(user._id, user.username);
             return {token, user}
         },
@@ -88,20 +88,20 @@ export const resolvers =
         {
             if (context.user)
             {
-                return  await User.findByIdAndDelete(context.user._id);
+                return  await User.findByIdAndDelete(context.user._id).populate("tasks");
             }
 
             throw new GraphQLError(`${resolvers.Mutation.deleteUser.name}: Forbidden operation.`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
         },
 
         deleteTask: async (_parent: unknown, {id}: {id: string}): Promise<ITask | null> =>
-            await Task.findByIdAndDelete(id),
+            await Task.findByIdAndDelete(id).populate("user"),
 
         setUsername: async (_parent: unknown, {username}: {username: string}, context: Context): Promise<typeof User | null> =>
         {
             if (context.user)
             {
-                return await User.findByIdAndUpdate(context.user._id, {username}, {new: true, runValidators: true});
+                return await User.findByIdAndUpdate(context.user._id, {username}, {new: true, runValidators: true}).populate("tasks");
             }
 
             throw new GraphQLError(`${resolvers.Mutation.setUsername.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
@@ -111,7 +111,7 @@ export const resolvers =
         {
             if (context.user)
             {
-                return await User.findByIdAndUpdate(context.user?._id, {password}, {new: true, runValidators: true});
+                return await User.findByIdAndUpdate(context.user?._id, {password}, {new: true, runValidators: true}).populate("tasks");
             }
 
             throw new GraphQLError(`${resolvers.Mutation.setPassword.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
@@ -121,14 +121,14 @@ export const resolvers =
         {
             if (context.user)
             {
-                return await Task.findByIdAndUpdate(context.user?._id, {title}, {new: true, runValidators: true});
+                return await Task.findByIdAndUpdate(context.user?._id, {title}, {new: true, runValidators: true}).populate("user");
             }
 
             throw new GraphQLError(`${resolvers.Mutation.setTaskTitle.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
         },
 
         setTaskAccomplished: async (_parent: unknown, {id, accomplished}: {id: string, accomplished: boolean}): Promise<typeof Task | null> =>
-            await Task.findByIdAndUpdate(id, {accomplished}, {new: true, runValidators: true})
+            await Task.findByIdAndUpdate(id, {accomplished}, {new: true, runValidators: true}).populate("user")
     }
   };
 

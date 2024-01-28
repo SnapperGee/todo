@@ -105,6 +105,15 @@ taskSchema.pre<UpdateQuery<typeof taskSchema>>("deleteOne", async function() {
     await User.findByIdAndUpdate(taskToDelete?.user, { $pull: {tasks: {_id: taskToDelete?._id}} });
 });
 
+taskSchema.pre<UpdateQuery<typeof taskSchema>>("deleteMany", async function() {
+    const tasksToDelete = await this.model.find(this.getFilter());
+
+    for (const taskToDelete of tasksToDelete)
+    {
+        await User.findByIdAndUpdate(taskToDelete?.user, { $pull: {tasks: {_id: taskToDelete?._id}} });
+    }
+});
+
 // Delete the task from the user's tasks array when task is deleted via document.
 taskSchema.pre("deleteOne", {document: true, query: false}, async function() {
     await User.findByIdAndUpdate(this.user, { $pull: {tasks: {_id: this._id}} });
