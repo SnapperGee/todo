@@ -36,13 +36,13 @@ export interface IUser
 
     /**
      * The array of {@link task.taskSchema Task} subdocuments of the user that
-     * have been accomplished.
+     * are accomplished. This is a virtual field.
      */
     accomplishedTasks: Types.DocumentArray<ITask>;
 
     /**
      * The array of {@link task.taskSchema Task} subdocuments of the user that
-     * are pending (have not been accomplished).
+     * are pending (have not been accomplished). This is a virtual field.
      */
     pendingTasks: Types.DocumentArray<ITask>;
 }
@@ -60,6 +60,13 @@ type UserModel = Model<IUser, {}, IUserMethods>;
  * - username: A username string.
  * - password: A hashed password string.
  * - tasks: An array of {@link task.taskSchema Task} subdocuments.
+ * - accomplishedTasks: A virtual field containing an array of {@link task.taskSchema Task}
+ *   subdocuments that are accomplished.
+ * - pendingTasks: A virtual field containing an array of {@link task.taskSchema Task}
+ *   subdocuments that are pending (have not been accomplished).
+ *
+ * This schema contains middleware hooks that hash the password string and
+ * delete the user's tasks from the Tasks collection when the user is deleted.
  *
  * @see {@link IUser}
  * @see {@link User}

@@ -47,6 +47,9 @@ export interface ITask
  * - accomplished: A boolean value that indicates whether the task has been accomplished or not.
  * - schedule: The date when the task is scheduled to be accomplished.
  *
+ * This schema contains middleware that adds the task to the user's tasks array
+ * upon creation, and removes the task from the user's tasks array upon deletion.
+ *
  * @see {@link ITask}
  * @see {@link Task}
  */
