@@ -136,6 +136,10 @@ userSchema.pre<UpdateQuery<typeof userSchema>>("findOneAndDelete", async functio
     await Task.deleteMany({user: deletedUser?._id});
 });
 
+userSchema.pre("deleteOne", {document: true, query: false}, async function() {
+    await Task.deleteMany({user: this._id});
+});
+
 // Return true if the password string matches the stored hashed password string.
 userSchema.methods.isCorrectPassword = async function (aString: string) {
     return bcrypt.compare(aString, this.password);
