@@ -64,14 +64,14 @@ export const resolvers =
                 throw new GraphQLError(`${resolvers.Mutation.login.name}: Invalid username password combo.`, {extensions: {code: "INVALIDUSERCREDENTIALS", http: {status: 401}}});
             }
 
-            const token = signToken(user._id, user.username);
+            const token = signToken(user._id);
             return {token, user};
         },
 
         createUser: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<{token: string, user: IUser}> =>
         {
             const user = await User.create({username, password});
-            const token = signToken(user._id, user.username);
+            const token = signToken(user._id);
             return {token, user}
         },
 

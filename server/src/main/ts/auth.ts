@@ -7,7 +7,6 @@ export interface Context
 {
     user?: {
         readonly _id: Types.ObjectId;
-        readonly username: string;
     };
 }
 
@@ -40,8 +39,8 @@ export const authMiddleware = async ({req}: {req: Request & Context}): Promise<C
     }
 };
 
-export const signToken = (_id: Types.ObjectId, username: string) =>
+export const signToken = (_id: Types.ObjectId) =>
 {
-    const user = { _id, username };
+    const user = { _id };
     return jwt.sign({ user }, process.env.JWT_SECRET!);
 };
