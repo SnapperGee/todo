@@ -24,18 +24,18 @@ export const typeDefs =
         user: User!
     }
 
-    type Query
-    {
-        user: User!
-        tasks: [Task]!
-        task(id: ID!): Task
-    }
-
     type DeleteResult
     {
         n: Int!
         ok: Int!
         deletedCount: Int!
+    }
+
+    type Query
+    {
+        user: User!
+        tasks: [Task]!
+        task(id: ID!): Task
     }
 
     type Mutation
