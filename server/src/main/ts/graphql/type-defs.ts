@@ -36,16 +36,16 @@ export const typeDefs =
 
     type Mutation
     {
-        createUser(username: String!, password: String!): Auth!
         deleteUser(id: ID!): User
         deleteTask(id: ID!): Task
-        setTaskTitle(id: ID!, title: String!): Task
         setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
 
-        login(username: String!, password: String!): Auth
-        createTask(title: String!, schedule: String!): Task
-        setUsername(username: String!): User
-        setPassword(password: String!): User
+        createUser(username: String!, password: String!): Auth!
+        login(username: String!, password: String!): Auth!
+        setUsername(username: String!): User!
+        setPassword(password: String!): User!
+        createTask(title: String!, schedule: String!): Task!
+        setTaskTitle(title: String!): Task!
     }
 `;
 

@@ -97,11 +97,18 @@ export const resolvers =
                 return await User.findByIdAndUpdate(context.user?._id, {password}, {new: true, runValidators: true});
             }
 
-            throw new GraphQLError(`${resolvers.Mutation.setUsername.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
+            throw new GraphQLError(`${resolvers.Mutation.setPassword.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
         },
 
-        setTaskTitle: async (_parent: unknown, {id, title}: {id: string, title: string}): Promise<typeof Task | null> =>
-            await Task.findByIdAndUpdate(id, {title}, {new: true, runValidators: true}),
+        setTaskTitle: async (_parent: unknown, {title}: {id: string, title: string}, context: Context): Promise<typeof Task | null> =>
+        {
+            if (context.user)
+            {
+                return await Task.findByIdAndUpdate(context.user?._id, {title}, {new: true, runValidators: true});
+            }
+
+            throw new GraphQLError(`${resolvers.Mutation.setTaskTitle.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
+        },
 
         setTaskAccomplished: async (_parent: unknown, {id, accomplished}: {id: string, accomplished: boolean}): Promise<typeof Task | null> =>
             await Task.findByIdAndUpdate(id, {accomplished}, {new: true, runValidators: true})
