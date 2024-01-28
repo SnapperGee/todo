@@ -19,10 +19,31 @@ import bcrypt from "bcrypt";
  */
 export interface IUser
 {
+    /**
+     * The username string of the user.
+     */
     username: string;
+
+    /**
+     * The hashed password string of the user.
+     */
     password: string;
+
+    /**
+     * The array of {@link task.taskSchema Task} subdocuments of the user.
+     */
     tasks: Types.DocumentArray<ITask>;
+
+    /**
+     * The array of {@link task.taskSchema Task} subdocuments of the user that
+     * have been accomplished.
+     */
     accomplishedTasks: Types.DocumentArray<ITask>;
+
+    /**
+     * The array of {@link task.taskSchema Task} subdocuments of the user that
+     * are pending (have not been accomplished).
+     */
     pendingTasks: Types.DocumentArray<ITask>;
 }
 

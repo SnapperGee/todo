@@ -18,9 +18,24 @@ import { Schema, model, Types, UpdateQuery } from "mongoose";
  */
 export interface ITask
 {
+    /**
+     * The {@link user.userSchema User} that owns the task.
+     */
     user: Types.ObjectId;
+
+    /**
+     * The title string of the task.
+     */
     title: string;
+
+    /**
+     * A boolean value that indicates whether the task has been accomplished or not.
+     */
     accomplished: boolean;
+
+    /**
+     * The date when the task is scheduled to be accomplished.
+     */
     schedule: Date;
 }
 
