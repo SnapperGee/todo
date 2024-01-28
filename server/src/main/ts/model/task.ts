@@ -27,7 +27,7 @@ export interface ITask
 /**
  * The schema for the {@link Task Task model}. Contains the following fields:
  *
- * - user: The user that owns the task. References a User document.
+ * - user: The {@link user.userSchema User} that owns the task.
  * - title: The title string of the task.
  * - accomplished: A boolean value that indicates whether the task has been accomplished or not.
  * - schedule: The date when the task is scheduled to be accomplished.
