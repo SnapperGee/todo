@@ -20,17 +20,14 @@ export const resolvers =
         task: async (_parent: unknown, {id}: {id: string}): Promise<typeof Task | null> =>
             await Task.findById(id).populate("user"),
 
-        tasks: async (_parent: unknown, {id}: {id: string}): Promise<ITask[] | undefined> =>
-            await Task.find({user: id}).populate("user"),
-
-        tasksOfLoggedInUser: async (_parent: unknown, _args: unknown, context: Context): Promise<ITask[] | undefined> =>
+        tasks: async (_parent: unknown, _args: unknown, context: Context): Promise<ITask[] | undefined> =>
         {
             if (context.user)
             {
                 return await Task.find({user: context.user._id}).populate("user")
             }
 
-            throw new GraphQLError(`${resolvers.Query.tasksOfLoggedInUser.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
+            throw new GraphQLError(`${resolvers.Query.tasks.name}: Forbidden operation.`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
         }
     },
 
