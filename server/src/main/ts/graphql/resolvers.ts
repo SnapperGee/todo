@@ -95,19 +95,19 @@ export const resolvers =
         },
 
         deleteTask: async (_parent: unknown, {id}: {id: string}, context: Context): Promise<ITask | null> =>
+        {
+            if (context.user)
             {
-                if (context.user)
+                const taskToDelete = await Task.findById(id);
+
+                if (taskToDelete?.user.equals(context.user._id))
                 {
-                    const taskToDelete = await Task.findById(id);
-
-                    if (taskToDelete?.user.equals(context.user._id))
-                    {
-                        return await Task.findByIdAndDelete(taskToDelete._id).populate("user");
-                    }
+                    return await Task.findByIdAndDelete(taskToDelete._id).populate("user");
                 }
+            }
 
-                throw new GraphQLError(`${resolvers.Mutation.deleteTask.name}: Forbidden operation.`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
-            },
+            throw new GraphQLError(`${resolvers.Mutation.deleteTask.name}: Forbidden operation.`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
+        },
 
         setUsername: async (_parent: unknown, {username}: {username: string}, context: Context): Promise<typeof User | null> =>
         {
