@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { Types } from "mongoose";
 import { GraphQLError } from "graphql";
-import type { Request, Response, NextFunction } from "express";
+import type { Request } from "express";
 
 export interface Context
 {
