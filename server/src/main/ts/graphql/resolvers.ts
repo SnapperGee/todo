@@ -80,20 +80,17 @@ export const resolvers =
         deleteTask: async (_parent: unknown, {id}: {id: string}): Promise<ITask | null> =>
             await Task.findByIdAndDelete(id),
 
-        setUsername: async (_parent: unknown, {id, username}: {id: string, username: string}): Promise<typeof User | null> =>
-            await User.findByIdAndUpdate(id, {username}, {new: true, runValidators: true}),
-
         setPassword: async (_parent: unknown, {id, password}: {id: string, password: string}): Promise<typeof User | null> =>
             await User.findByIdAndUpdate(id, {password}, {new: true, runValidators: true}),
 
-        setLoggedInUsername: async (_parent: unknown, {username}: {username: string}, context: Context): Promise<typeof User | null> =>
+        setUsername: async (_parent: unknown, {username}: {username: string}, context: Context): Promise<typeof User | null> =>
         {
             if (context.user)
             {
-                return await User.findByIdAndUpdate(context.user._id, {username}, {new: true})
+                return await User.findByIdAndUpdate(context.user._id, {username}, {new: true, runValidators: true});
             }
 
-            throw new GraphQLError(`${resolvers.Mutation.setLoggedInUsername.name}: Not logged in`, {extensions: {code: "UNAUTHORIZED"}});
+            throw new GraphQLError(`${resolvers.Mutation.setUsername.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
         },
 
         setLoggedInUserPassword: async (_parent: unknown, {password}: {password: string}, context: Context): Promise<typeof User | null> =>
