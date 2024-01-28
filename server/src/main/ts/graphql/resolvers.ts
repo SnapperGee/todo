@@ -71,7 +71,7 @@ export const resolvers =
                 return await Task.create({user: context.user._id, title, schedule});
             }
 
-            throw new GraphQLError(`${resolvers.Mutation.createTask.name}: Forbidden operation.`, {extensions: {code: "UNAUTHORIZED", http: {status: 401}}});
+            throw new GraphQLError(`${resolvers.Mutation.createTask.name}: Forbidden operation.`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
         },
 
         deleteUser: async (_parent: unknown, {id}: {id: string}): Promise<IUser | null> =>
