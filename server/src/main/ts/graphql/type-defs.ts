@@ -26,11 +26,10 @@ export const typeDefs =
 
     type Query
     {
-        user(id: ID!): User
         task(id: ID!): Task
         tasks(id: ID!): [Task]
 
-        loggedInUser: User
+        user: User!
         tasksOfLoggedInUser: [Task]
     }
 
