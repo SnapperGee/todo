@@ -39,14 +39,13 @@ export const typeDefs =
         createUser(username: String!, password: String!): Auth!
         deleteUser(id: ID!): User
         deleteTask(id: ID!): Task
-        setPassword(id: ID!, password: String!): User
         setTaskTitle(id: ID!, title: String!): Task
         setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
 
         login(username: String!, password: String!): Auth
         createTask(title: String!, schedule: String!): Task
         setUsername(username: String!): User
-        setLoggedInUserPassword(password: String!): User
+        setPassword(password: String!): User
     }
 `;
 
