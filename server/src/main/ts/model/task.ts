@@ -1,7 +1,10 @@
 /**
  * This module contains the Task model and its schema. A Task represents a task
- * that a user can schedule and accomplish.
+ * that a {@link user} can schedule and accomplish.
+ *
  * @module task
+ *
+ * @see {@link user}
  */
 
 import { User } from "./user.js";
@@ -9,6 +12,9 @@ import { Schema, model, Types, UpdateQuery } from "mongoose";
 
 /**
  * The interface for the Task {@link taskSchema schema} and {@link Task model}.
+ *
+ * @see {@link taskSchema}
+ * @see {@link Task}
  */
 export interface ITask
 {
@@ -25,6 +31,9 @@ export interface ITask
  * - title: The title string of the task.
  * - accomplished: A boolean value that indicates whether the task has been accomplished or not.
  * - schedule: The date when the task is scheduled to be accomplished.
+ *
+ * @see {@link ITask}
+ * @see {@link Task}
  */
 export const taskSchema = new Schema<ITask>(
     {
@@ -80,6 +89,9 @@ taskSchema.pre<UpdateQuery<typeof taskSchema>>("findOneAndDelete", async functio
  * - title: The title string of the task.
  * - accomplished: A boolean value that indicates whether the task has been accomplished or not.
  * - schedule: The date when the task is scheduled to be accomplished.
+ *
+ * @see {@link taskSchema}
+ * @see {@link ITask}
  */
 export const Task = model<ITask>("Task", taskSchema);
 
