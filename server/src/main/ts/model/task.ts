@@ -94,10 +94,15 @@ taskSchema.post("save", async function()
     await User.findByIdAndUpdate(this.user, { $push: {tasks: this} });
 });
 
-//  Delete the task from the user's tasks array when task is deleted.
+// Delete the task from the user's tasks array when task is deleted via query.
 taskSchema.pre<UpdateQuery<typeof taskSchema>>("findOneAndDelete", async function() {
     const deletedTask = await this.model.findOne(this.getFilter());
     await User.findByIdAndUpdate(deletedTask?.user, { $pull: {tasks: {_id: deletedTask?._id}} });
+});
+
+// Delete the task from the user's tasks array when task is deleted via document.
+taskSchema.pre("deleteOne", {document: true, query: false}, async function() {
+    await User.findByIdAndUpdate(this.user, { $pull: {tasks: {_id: this._id}} });
 });
 
 /**
