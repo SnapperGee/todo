@@ -17,7 +17,7 @@ export const resolvers =
             throw new GraphQLError(`${resolvers.Query.user.name}: Forbidden operation`, {extensions: {code: "FORBIDDEN", http: {status: 401}}});
         },
 
-        task: async (_parent: unknown, {id}: {id: string}, context: Context): Promise<typeof Task | null> =>
+        task: async (_parent: unknown, {id}: {id: string}, context: Context): Promise<ITask | null> =>
         {
             if (context.user)
             {
@@ -29,7 +29,7 @@ export const resolvers =
                 }
                 else if (task.user.equals(context.user._id))
                 {
-                    return await Task.findOne({_id: id, user: context.user._id});
+                    return task;
                 }
             }
 
