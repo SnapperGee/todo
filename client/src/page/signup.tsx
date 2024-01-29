@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 export const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
 
@@ -91,6 +92,22 @@ export const Signup = () => {
                   onChange={(e) => {
                     setPassword(e.currentTarget.value);
                     setPasswordErrorMsg(""); // Clear error when typing in the password field
+                  }}
+                />
+                <Typography color="error" variant="body2" sx={passwordConfirm.length !== 0 && passwordConfirm !== password ? {} : {display: "none"}}>
+                  Passwords do not match
+                </Typography>
+                <TextField
+                  required
+                  fullWidth
+                  sx={{mt: 1}}
+                  name="passwordConfirm"
+                  label="Confirm Password"
+                  type="password"
+                  id="passwordConfirm"
+                  value={passwordConfirm}
+                  onChange={(e) => {
+                    setPasswordConfirm(e.currentTarget.value);
                   }}
                 />
               </Grid>
