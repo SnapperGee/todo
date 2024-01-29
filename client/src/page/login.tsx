@@ -15,22 +15,22 @@ import {
   export const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMsg, setErrorMsg] = useState("");
+    const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
 
     const handleRegister = async () => {
       // Check if username is blank or contains white space characters
       if (!username) {
-        setErrorMsg("Please enter a username.");
+        setUsernameErrorMsg("Please enter a username.");
         return;
       }
       else if (/\s/.test(username)) {
-        setErrorMsg("Username cannot contain whitespace.");
+        setUsernameErrorMsg("Username cannot contain whitespace.");
         return;
       }
 
       // Check if password is blank
       if (!password) {
-        setErrorMsg("Please enter a password.");
+        setUsernameErrorMsg("Please enter a password.");
         return;
       }
 
@@ -39,7 +39,7 @@ import {
       // If login is successful, you can reset the form and clear errors
       setUsername("");
       setPassword("");
-      setErrorMsg("");
+      setUsernameErrorMsg("");
     };
 
     return (
@@ -57,8 +57,8 @@ import {
             <Avatar sx={{ m: 1, bgcolor: "primary.light" }}></Avatar>
             <Typography variant="h5">Login</Typography>
             <Box sx={{ mt: 3 }}>
-              <Typography color="error" variant="body2" sx={errorMsg ? {} : {display: "none"}}>
-                {errorMsg}
+              <Typography color="error" variant="body2" sx={usernameErrorMsg ? {} : {display: "none"}}>
+                {usernameErrorMsg}
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -71,7 +71,7 @@ import {
                     value={username}
                     onChange={(e) => {
                       setUsername(e.target.value);
-                      setErrorMsg(""); // Clear error when typing in the username field
+                      setUsernameErrorMsg(""); // Clear error when typing in the username field
                     }}
                   />
                 </Grid>
@@ -86,7 +86,7 @@ import {
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
-                      setErrorMsg(""); // Clear error when typing in the password field
+                      setUsernameErrorMsg(""); // Clear error when typing in the password field
                     }}
                   />
                 </Grid>
