@@ -1,3 +1,4 @@
+import { LOGIN } from "../graphql/mutations";
 import {
     Avatar,
     Box,
@@ -8,36 +9,57 @@ import {
     TextField,
     Typography,
   } from "@mui/material";
-  
+
   import { useState } from "react";
   import { Link } from "react-router-dom";
-  
+  import { useMutation } from "@apollo/client";
+
   export const Login = () => {
-    const [username, loginUser] = useState("");
-    const [password, usePassword] = useState("");
-    const [error, setError] = useState("");
-  
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
+    const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
+
+    const [ login ] = useMutation(LOGIN);
+
     const handleRegister = async () => {
       // Check if username is blank or contains white space characters
-      if (!username || /\s/.test(username)) {
-        setError("Please enter a username.");
+      if (!username) {
+        setUsernameErrorMsg("Please enter a username.");
         return;
       }
-  
+      else if (/\s/.test(username)) {
+        setUsernameErrorMsg("Username cannot contain whitespace.");
+        return;
+      }
+
       // Check if password is blank
       if (!password) {
-        setError("Please enter a password.");
+        setPasswordErrorMsg("Please enter a password.");
         return;
       }
-  
+
       // login logic
-  
+      try
+      {
+        const { data } = await login({
+          variables: {username, password}
+        });
+
+        localStorage.setItem("token", data.login.token);
+      }
+      catch (error)
+      {
+        console.error(error);
+      }
+
       // If login is successful, you can reset the form and clear errors
-      loginUser("");
-      usePassword("");
-      setError("");
+      setUsername("");
+      setPassword("");
+      setUsernameErrorMsg("");
+      setPasswordErrorMsg("");
     };
-  
+
     return (
       <>
         <Container maxWidth="xs">
@@ -53,11 +75,9 @@ import {
             <Avatar sx={{ m: 1, bgcolor: "primary.light" }}></Avatar>
             <Typography variant="h5">Login</Typography>
             <Box sx={{ mt: 3 }}>
-              {error && (
-                <Typography color="error" variant="body2">
-                  {error}
-                </Typography>
-              )}
+              <Typography color="error" variant="body2" sx={usernameErrorMsg ? {} : {display: "none"}}>
+                {usernameErrorMsg}
+              </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -68,12 +88,15 @@ import {
                     name="username"
                     value={username}
                     onChange={(e) => {
-                      loginUser(e.target.value);
-                      setError(""); // Clear error when typing in the username field
+                      setUsername(e.target.value);
+                      setUsernameErrorMsg(""); // Clear error when typing in the username field
                     }}
                   />
                 </Grid>
                 <Grid item xs={12}>
+                  <Typography color="error" variant="body2" sx={passwordErrorMsg ? {} : {display: "none"}}>
+                    {passwordErrorMsg}
+                  </Typography>
                   <TextField
                     required
                     fullWidth
@@ -83,8 +106,8 @@ import {
                     id="password"
                     value={password}
                     onChange={(e) => {
-                      usePassword(e.target.value);
-                      setError(""); // Clear error when typing in the password field
+                      setPassword(e.target.value);
+                      setUsernameErrorMsg(""); // Clear error when typing in the password field
                     }}
                   />
                 </Grid>
@@ -108,5 +131,5 @@ import {
       </>
     );
   };
-  
+
   export default Login;
