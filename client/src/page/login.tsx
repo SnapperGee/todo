@@ -16,6 +16,7 @@ import {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
+    const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
 
     const handleRegister = async () => {
       // Check if username is blank or contains white space characters
@@ -30,7 +31,7 @@ import {
 
       // Check if password is blank
       if (!password) {
-        setUsernameErrorMsg("Please enter a password.");
+        setPasswordErrorMsg("Please enter a password.");
         return;
       }
 
@@ -40,6 +41,7 @@ import {
       setUsername("");
       setPassword("");
       setUsernameErrorMsg("");
+      setPasswordErrorMsg("");
     };
 
     return (
@@ -76,6 +78,9 @@ import {
                   />
                 </Grid>
                 <Grid item xs={12}>
+                  <Typography color="error" variant="body2" sx={passwordErrorMsg ? {} : {display: "none"}}>
+                    {passwordErrorMsg}
+                  </Typography>
                   <TextField
                     required
                     fullWidth
