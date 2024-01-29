@@ -48,6 +48,7 @@ import {
 
         localStorage.setItem("token", data.login.token);
         window.location.href = "/tasks";
+        return;
       }
       catch (error)
       {
