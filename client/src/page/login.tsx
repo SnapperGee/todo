@@ -57,11 +57,9 @@ import {
             <Avatar sx={{ m: 1, bgcolor: "primary.light" }}></Avatar>
             <Typography variant="h5">Login</Typography>
             <Box sx={{ mt: 3 }}>
-              {errorMsg && (
-                <Typography color="error" variant="body2">
-                  {errorMsg}
-                </Typography>
-              )}
+              <Typography color="error" variant="body2" sx={errorMsg ? {} : {display: "none"}}>
+                {errorMsg}
+              </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
