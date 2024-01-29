@@ -22,7 +22,7 @@ import {
 
     const [ login ] = useMutation(LOGIN);
 
-    const handleRegister = async () => {
+    const loginBtnClickHandler = async () => {
       // Check if username is blank or contains white space characters
       if (!username) {
         setUsernameErrorMsg("Please enter a username.");
@@ -115,7 +115,7 @@ import {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={handleRegister}
+                onClick={loginBtnClickHandler}
               >
                 Log In
               </Button>
