@@ -18,7 +18,7 @@ export const Signup = () => {
   const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
 
-  const handleRegister = async () => {
+  const signupBtnClickHandler = async () => {
     // Check if username is blank or contains white space characters
     if (!username) {
       setUsernameErrorMsg("Please enter a username.");
@@ -99,7 +99,7 @@ export const Signup = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={handleRegister}
+              onClick={signupBtnClickHandler}
             >
               Register
             </Button>
