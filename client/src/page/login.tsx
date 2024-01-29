@@ -19,8 +19,12 @@ import {
 
     const handleRegister = async () => {
       // Check if username is blank or contains white space characters
-      if (!username || /\s/.test(username)) {
+      if (!username) {
         setErrorMsg("Please enter a username.");
+        return;
+      }
+      else if (/\s/.test(username)) {
+        setErrorMsg("Username cannot contain whitespace.");
         return;
       }
 
