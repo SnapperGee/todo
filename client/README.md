@@ -5,6 +5,7 @@ Todo task manager web app client frontend.
 [![Node][node shield]][node website]
 [![TypeScript][typescript shield]][typescript website]
 [![react][react shield]][react website]
+[![Material UI][mui shield]][mui website]
 [![Apollo][apollo shield]][apollo website]
 [![GraphQL][graphql shield]][graphql website]
 [![React Router][react router shield]][react router website]
@@ -19,6 +20,8 @@ Todo task manager web app client frontend.
 [node website]: https://nodejs.org/en/about "node"
 [typescript shield]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white "TypeScript"
 [typescript website]: https://www.typescriptlang.org/ "TypeScript"
+[mui shield]: https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white "Material UI"
+[mui website]: https://mui.com/ "Material UI"
 [sass shield]: https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white "SASS"
 [sass website]: https://sass-lang.com/ "SASS"
 [react shield]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB "React"
