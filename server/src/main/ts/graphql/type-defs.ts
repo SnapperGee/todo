@@ -49,7 +49,7 @@ export const typeDefs =
         setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
         deleteUser: User
         deleteTask(id: ID!): Task
-        deleteTasks(ids: [ID]!): DeleteResult
+        deleteTasks(ids: [ID!]!): DeleteResult
     }
 `;
 
