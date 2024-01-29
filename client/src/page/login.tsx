@@ -47,6 +47,7 @@ import {
         });
 
         localStorage.setItem("token", data.login.token);
+        window.location.href = "/tasks";
       }
       catch (error)
       {
@@ -54,10 +55,7 @@ import {
       }
 
       // If login is successful, you can reset the form and clear errors
-      setUsername("");
-      setPassword("");
-      setUsernameErrorMsg("");
-      setPasswordErrorMsg("");
+      setUsernameErrorMsg("Invalid username and password combination.");
     };
 
     return (
