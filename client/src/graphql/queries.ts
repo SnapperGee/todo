@@ -26,8 +26,8 @@ export const GET_USER = gql`
 `;
 
 export const GET_TASK = gql`
-    query tasks($id: ID!) {
-        tasks(id: $id) {
+    query task($id: ID!) {
+        task(id: $id) {
             _id
             title
             accomplished
