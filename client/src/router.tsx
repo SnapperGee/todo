@@ -3,7 +3,7 @@ import Error from "./page/error";
 import Login from "./page/login";
 import Task from "./page/task";
 import Signup from "./page/signup";
-import TasksViewer from "./page/tasks-viewer";
+import Tasks from "./page/tasks";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -25,8 +25,8 @@ export const router = createBrowserRouter([
           element: <Signup />,
         },
         {
-          path: "tasksviewer",
-          element: <TasksViewer />,
+          path: "tasks",
+          element: <Tasks />,
         },
         {
           path: "*",

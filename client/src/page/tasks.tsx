@@ -8,7 +8,7 @@ interface Task {
   // Add properties as needed here
 }
 
-export const TasksViewer = () => {
+export const Tasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -46,4 +46,4 @@ export const TasksViewer = () => {
   );
 };
 
-export default TasksViewer;
+export default Tasks;
