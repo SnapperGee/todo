@@ -15,18 +15,23 @@ import { Link } from "react-router-dom";
 export const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
+  const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
 
   const handleRegister = async () => {
     // Check if username is blank or contains white space characters
-    if (!username || /\s/.test(username)) {
-      setError("Please enter a valid username without white spaces.");
+    if (!username) {
+      setUsernameErrorMsg("Please enter a username.");
+      return;
+    }
+    else if (/\s/.test(username)) {
+      setUsernameErrorMsg("Username cannot contain whitespace.");
       return;
     }
 
     // Check if password is blank
     if (!password) {
-      setError("Please enter a password.");
+      setPasswordErrorMsg("Please enter a password.");
       return;
     }
 
@@ -35,7 +40,7 @@ export const Signup = () => {
     // If registration is successful, you can reset the form and clear errors
     setUsername("");
     setPassword("");
-    setError("");
+    setUsernameErrorMsg("");
   };
 
   return (
@@ -53,38 +58,39 @@ export const Signup = () => {
           <Avatar sx={{ m: 1, bgcolor: "primary.light" }}></Avatar>
           <Typography variant="h5">Sign Up</Typography>
           <Box sx={{ mt: 3 }}>
-            {error && (
-              <Typography color="error" variant="body2">
-                {error}
+              <Typography color="error" variant="body2" sx={usernameErrorMsg ? {} : {display: "none"}}>
+                {usernameErrorMsg}
               </Typography>
-            )}
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="username"
-                  label="Enter Username"
+                  label="Username"
                   name="username"
                   value={username}
                   onChange={(e) => {
-                    setUsername(e.target.value);
-                    setError(""); // Clear error when typing in the username field
+                    setUsername(e.currentTarget.value);
+                    setUsernameErrorMsg(""); // Clear error when typing in the username field
                   }}
                 />
               </Grid>
               <Grid item xs={12}>
+                <Typography color="error" variant="body2" sx={passwordErrorMsg ? {} : {display: "none"}}>
+                  {passwordErrorMsg}
+                </Typography>
                 <TextField
                   required
                   fullWidth
                   name="password"
-                  label="Enter Password"
+                  label="Password"
                   type="password"
                   id="password"
                   value={password}
                   onChange={(e) => {
-                    setPassword(e.target.value);
-                    setError(""); // Clear error when typing in the password field
+                    setPassword(e.currentTarget.value);
+                    setPasswordErrorMsg(""); // Clear error when typing in the password field
                   }}
                 />
               </Grid>
