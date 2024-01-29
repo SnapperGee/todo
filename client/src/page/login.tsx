@@ -1,3 +1,4 @@
+import { LOGIN } from "../graphql/mutations";
 import {
     Avatar,
     Box,
@@ -11,12 +12,15 @@ import {
 
   import { useState } from "react";
   import { Link } from "react-router-dom";
+  import { useMutation } from "@apollo/client";
 
   export const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
     const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
+
+    const [login, { error, data }] = useMutation(LOGIN);
 
     const handleRegister = async () => {
       // Check if username is blank or contains white space characters
@@ -36,6 +40,18 @@ import {
       }
 
       // login logic
+      try
+      {
+        const { data } = await login({
+          variables: {username, password}
+        });
+
+        localStorage.setItem("token", data.login.token);
+      }
+      catch (error)
+      {
+        console.error(error);
+      }
 
       // If login is successful, you can reset the form and clear errors
       setUsername("");

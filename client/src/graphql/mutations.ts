@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const LOGIN = gql`
-    mutation login($username: String!) {
+    mutation login($username: String!, $password: String!) {
         login(username: $username, password: $password) {
             token
             user{
@@ -99,11 +99,11 @@ export const DELETE_TASK = gql`
     }
 `;
 
-export const DELETE_TASKS = gql`
-    mutation deleteTasks($ids: [ID!]!) {
-        deleteTasks(ids: $ids) {
-            ok: Int!
-            deletedCount: Int!
-        }
-    }
-`;
+// export const DELETE_TASKS = gql`
+//     mutation deleteTasks($ids: [ID!]!) {
+//         deleteTasks(ids: $ids) {
+//             ok: Int!
+//             deletedCount: Int!
+//         }
+//     }
+// `;
