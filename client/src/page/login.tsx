@@ -106,7 +106,7 @@ import {
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
-                      setUsernameErrorMsg(""); // Clear error when typing in the password field
+                      setPasswordErrorMsg(""); // Clear error when typing in the password field
                     }}
                   />
                 </Grid>
