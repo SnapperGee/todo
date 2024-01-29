@@ -8,36 +8,36 @@ import {
     TextField,
     Typography,
   } from "@mui/material";
-  
+
   import { useState } from "react";
   import { Link } from "react-router-dom";
-  
+
   export const Login = () => {
-    const [username, loginUser] = useState("");
-    const [password, usePassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-  
+
     const handleRegister = async () => {
       // Check if username is blank or contains white space characters
       if (!username || /\s/.test(username)) {
         setError("Please enter a username.");
         return;
       }
-  
+
       // Check if password is blank
       if (!password) {
         setError("Please enter a password.");
         return;
       }
-  
+
       // login logic
-  
+
       // If login is successful, you can reset the form and clear errors
-      loginUser("");
-      usePassword("");
+      setUsername("");
+      setPassword("");
       setError("");
     };
-  
+
     return (
       <>
         <Container maxWidth="xs">
@@ -68,7 +68,7 @@ import {
                     name="username"
                     value={username}
                     onChange={(e) => {
-                      loginUser(e.target.value);
+                      setUsername(e.target.value);
                       setError(""); // Clear error when typing in the username field
                     }}
                   />
@@ -83,7 +83,7 @@ import {
                     id="password"
                     value={password}
                     onChange={(e) => {
-                      usePassword(e.target.value);
+                      setPassword(e.target.value);
                       setError(""); // Clear error when typing in the password field
                     }}
                   />
@@ -108,5 +108,5 @@ import {
       </>
     );
   };
-  
+
   export default Login;
