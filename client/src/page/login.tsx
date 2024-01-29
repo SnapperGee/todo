@@ -20,7 +20,7 @@ import {
     const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
     const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
 
-    const [login, { error, data }] = useMutation(LOGIN);
+    const [ login ] = useMutation(LOGIN);
 
     const handleRegister = async () => {
       // Check if username is blank or contains white space characters
