@@ -4,7 +4,6 @@ export const typeDefs =
     {
         _id: ID!
         username: String!
-        password: String!
         tasks: [Task]!
         accomplishedTasks: [Task]!
         pendingTasks: [Task]!
@@ -19,22 +18,39 @@ export const typeDefs =
         schedule: String!
     }
 
+    type Auth
+    {
+        token: String!
+        user: User!
+    }
+
+    type DeleteResult
+    {
+        n: Int!
+        ok: Int!
+        deletedCount: Int!
+    }
+
     type Query
     {
-        user(id: ID!): User
+        user: User!
+        tasks: [Task]!
         task(id: ID!): Task
-        tasks(id: ID!): [Task]
     }
 
     type Mutation
     {
-        createUser(username: String!, password: String!): User!
-        createTask(userId: ID!, title: String!, schedule: String!): Task!
-        deleteUser(id: ID!): User
         deleteTask(id: ID!): Task
-        setUsername(id: ID!, username: String!): User
-        setTaskTitle(id: ID!, title: String!): Task
+        deleteTasks(ids: [ID]!): DeleteResult
         setTaskAccomplished(id: ID!, accomplished: Boolean!): Task
+
+        createUser(username: String!, password: String!): Auth!
+        login(username: String!, password: String!): Auth!
+        setUsername(username: String!): User!
+        setPassword(password: String!): User!
+        createTask(title: String!, schedule: String!): Task!
+        setTaskTitle(id: ID!, title: String!): Task!
+        deleteUser: User
     }
 `;
 

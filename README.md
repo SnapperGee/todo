@@ -6,6 +6,7 @@ Todo task manager web app.
 [![TypeScript][typescript shield]][typescript website]
 [![react][react shield]][react website]
 [![Apollo][apollo shield]][apollo website]
+[![Jwt][jwt shield]][jwt website]
 [![GraphQL][graphql shield]][graphql website]
 [![React Router][react router shield]][react router website]
 [![Express][express shield]][express website]
@@ -28,6 +29,8 @@ Todo task manager web app.
 [graphql shield]: https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white "GraphQL"
 [graphql website]: https://graphql.org/ "GraphQL"
 [react website]: https://react.dev/ "React"
+[jwt shield]: https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens "JSON Web Token"
+[jwt website]: https://jwt.io/ "JSON Web Token"
 [react router shield]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white "React Router"
 [express shield]: https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB "Express"
 [express website]: https://expressjs.com/ "Express"
