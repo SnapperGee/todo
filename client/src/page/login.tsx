@@ -15,18 +15,18 @@ import {
   export const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
 
     const handleRegister = async () => {
       // Check if username is blank or contains white space characters
       if (!username || /\s/.test(username)) {
-        setError("Please enter a username.");
+        setErrorMsg("Please enter a username.");
         return;
       }
 
       // Check if password is blank
       if (!password) {
-        setError("Please enter a password.");
+        setErrorMsg("Please enter a password.");
         return;
       }
 
@@ -35,7 +35,7 @@ import {
       // If login is successful, you can reset the form and clear errors
       setUsername("");
       setPassword("");
-      setError("");
+      setErrorMsg("");
     };
 
     return (
@@ -53,9 +53,9 @@ import {
             <Avatar sx={{ m: 1, bgcolor: "primary.light" }}></Avatar>
             <Typography variant="h5">Login</Typography>
             <Box sx={{ mt: 3 }}>
-              {error && (
+              {errorMsg && (
                 <Typography color="error" variant="body2">
-                  {error}
+                  {errorMsg}
                 </Typography>
               )}
               <Grid container spacing={2}>
@@ -69,7 +69,7 @@ import {
                     value={username}
                     onChange={(e) => {
                       setUsername(e.target.value);
-                      setError(""); // Clear error when typing in the username field
+                      setErrorMsg(""); // Clear error when typing in the username field
                     }}
                   />
                 </Grid>
@@ -84,7 +84,7 @@ import {
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
-                      setError(""); // Clear error when typing in the password field
+                      setErrorMsg(""); // Clear error when typing in the password field
                     }}
                   />
                 </Grid>
