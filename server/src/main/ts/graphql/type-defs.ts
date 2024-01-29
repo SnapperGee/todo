@@ -26,7 +26,6 @@ export const typeDefs =
 
     type DeleteResult
     {
-        n: Int!
         ok: Int!
         deletedCount: Int!
     }
