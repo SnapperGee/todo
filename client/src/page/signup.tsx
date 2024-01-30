@@ -59,7 +59,7 @@ export const Signup = () => {
           <Avatar sx={{ m: 1, bgcolor: "primary.light" }}></Avatar>
           <Typography variant="h5">Sign Up</Typography>
           <Box sx={{ mt: 3 }}>
-              <Typography color="error" variant="body2" sx={usernameErrorMsg ? {} : {display: "none"}}>
+              <Typography color="error" variant="body2" sx={usernameErrorMsg ? {mb: 1} : {display: "none"}}>
                 {usernameErrorMsg}
               </Typography>
             <Grid container spacing={2}>
@@ -78,7 +78,7 @@ export const Signup = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Typography color="error" variant="body2" sx={passwordErrorMsg ? {} : {display: "none"}}>
+                <Typography color="error" variant="body2" sx={passwordErrorMsg ? {mb: 1} : {display: "none"}}>
                   {passwordErrorMsg}
                 </Typography>
                 <TextField
