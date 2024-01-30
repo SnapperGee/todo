@@ -24,7 +24,7 @@ function TabPanel(props: TabPanelProps) {
   return (
     <div
       role="tabpanel"
-      hidden={value !== index
+      hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
       {...other}

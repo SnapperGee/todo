@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { GET_USER } from '../graphql/queries';
+import { CREATE_TASK } from '../graphql/mutations';
 import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { CREATE_TASK } from '../graphql/mutations'; // Import the CREATE_TASK mutation
 
 interface Task {
   _id: string;
   title: string;
   description: string;
-  // Add properties as needed here
 }
 
 interface User {
@@ -19,6 +18,7 @@ interface User {
 
 export const Tasks = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [createTask] = useMutation(CREATE_TASK);
 
   const { loading, error, data } = useQuery(GET_USER);
 
@@ -36,17 +36,47 @@ export const Tasks = () => {
     return <p>Error fetching tasks: {error.message}</p>;
   }
 
-  const generateUniqueId = () => {
+  const handleAddTask = async () => {
     // Use a library like 'uuid' or a simple timestamp-based approach
-    // For example, using the current timestamp as a unique ID
-    return new Date().getTime().toString();
-  };
+    const newTaskId = new Date().getTime().toString();
 
-  const handleAddTask = () => {
-    generateUniqueId();
+    try {
+      // Use the CREATE_TASK mutation to create a new task
+      await createTask({
+        variables: { title: "New Task", schedule: new Date().toISOString() },
+        update: (cache, { data }) => {
+          if (data?.createTask) {
+            // Update the cache with the newly created task
+            cache.modify({
+              fields: {
+                user: (existingUserRef) => {
+                  const newTaskRef = cache.writeFragment({
+                    data: data.createTask,
+                    fragment: gql`
+                      fragment NewTask on Task {
+                        _id
+                        title
+                        description
+                      }
+                    `,
+                  });
 
-    // Navigate to the task edit page with the new task ID
-    window.location.href = `/task`;
+                  return {
+                    ...existingUserRef,
+                    tasks: [...existingUserRef.tasks, newTaskRef],
+                  };
+                },
+              },
+            });
+          }
+        },
+      });
+
+      // Redirect to the task editor page with the new task ID
+      window.location.href = `/task/${newTaskId}/edit`;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
