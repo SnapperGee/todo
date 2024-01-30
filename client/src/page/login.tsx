@@ -74,7 +74,7 @@ import {
             <Avatar sx={{ m: 1, bgcolor: "primary.light" }}></Avatar>
             <Typography variant="h5">Login</Typography>
             <Box sx={{ mt: 3 }}>
-              <Typography color="error" variant="body2" sx={usernameErrorMsg ? {} : {display: "none"}}>
+              <Typography color="error" variant="body2" sx={usernameErrorMsg ? {mb: 1} : {display: "none"}}>
                 {usernameErrorMsg}
               </Typography>
               <Grid container spacing={2}>
@@ -87,13 +87,13 @@ import {
                     name="username"
                     value={username}
                     onChange={(e) => {
-                      setUsername(e.target.value);
+                      setUsername(e.currentTarget.value);
                       setUsernameErrorMsg(""); // Clear error when typing in the username field
                     }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography color="error" variant="body2" sx={passwordErrorMsg ? {} : {display: "none"}}>
+                  <Typography color="error" variant="body2" sx={passwordErrorMsg ? {mb: 1} : {display: "none"}}>
                     {passwordErrorMsg}
                   </Typography>
                   <TextField
@@ -105,7 +105,7 @@ import {
                     id="password"
                     value={password}
                     onChange={(e) => {
-                      setPassword(e.target.value);
+                      setPassword(e.currentTarget.value);
                       setPasswordErrorMsg(""); // Clear error when typing in the password field
                     }}
                   />
