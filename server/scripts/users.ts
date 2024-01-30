@@ -55,7 +55,7 @@ export const users: IUser[] = [
     {
         _id: new Types.ObjectId(),
         username: "Dexter",
-        password: "dexterslab",
+        password: "dexterpassword",
         tasks: []
     },
     {
