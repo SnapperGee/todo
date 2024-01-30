@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_USER } from '../graphql/queries';
 import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { CREATE_TASK } from '../graphql/mutations'; // Import the CREATE_TASK mutation
 
 interface Task {
   _id: string;
@@ -58,6 +60,10 @@ export const Tasks = () => {
               <h3>{task.title}</h3>
               <p>{task.description}</p>
               {/* Display other task details as needed */}
+              {/* Add Edit button with a Link to the task edit page */}
+              <Link to={`/task/${task._id}/edit`}>
+                <button>Edit</button>
+              </Link>
             </li>
           ))}
         </ul>
