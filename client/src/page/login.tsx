@@ -118,7 +118,9 @@ import {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={loginBtnClickHandler}
-                disabled={username.length === 0 || password.length === 0 || usernameErrorMsg.length !== 0 || passwordErrorMsg.length !== 0 || usernamePasswordErrorMsg.length !== 0}
+                disabled={    username.length === 0 || password.length === 0
+                           || usernameErrorMsg.length !== 0 || passwordErrorMsg.length !== 0
+                           || usernamePasswordErrorMsg.length !== 0 }
               >
                 Log In
               </Button>
