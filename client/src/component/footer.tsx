@@ -1,7 +1,5 @@
-import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Link from '@mui/material/Link';
 import { Box, Container, Grid, Typography } from "@mui/material";
 
 // TODO remove, this demo shouldn't need to reset the theme.
