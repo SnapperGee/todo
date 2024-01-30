@@ -28,22 +28,5 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "dependencies": {
-    "@apollo/client": "^3.8.10",
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@fontsource/inter": "^5.0.16",
-    "@material/checkbox": "^14.0.0",
-    "@material/form-field": "^14.0.0",
-    "@material/web": "^1.1.1",
-    "@mui/icons-material": "^5.15.6",
-    "@mui/joy": "^5.0.0-beta.24",
-    "@mui/material": "^5.15.6",
-    "@mui/styled-engine-sc": "^6.0.0-alpha.13",
-    "@mui/system": "^5.15.6",
-    "graphql": "^16.8.1",
-    "rollup-plugin-node-polyfills": "^0.2.1",
-    "styled-components": "^6.1.8"
   }
 }
