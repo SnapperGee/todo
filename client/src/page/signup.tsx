@@ -1,3 +1,4 @@
+import { CREATE_USER } from "../graphql/mutations";
 import {
   Avatar,
   Box,
@@ -11,13 +12,17 @@ import {
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 
 export const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [registrationErrorMsg, setRegistrationErrorMsg] = useState("");
+
+  const [ createUser ] = useMutation(CREATE_USER);
 
   const signupBtnClickHandler = async () => {
     // Check if username is blank or contains white space characters
@@ -36,12 +41,26 @@ export const Signup = () => {
       return;
     }
 
-    // Registration logic
+    if (!passwordConfirm) {
+      setPasswordErrorMsg("Please confirm password.");
+      return;
+    }
 
-    // If registration is successful, you can reset the form and clear errors
-    setUsername("");
-    setPassword("");
-    setUsernameErrorMsg("");
+    try
+    {
+      const { data } = await createUser({
+        variables: {username, password}
+      });
+
+      localStorage.setItem("token", data.createUser.token);
+      window.location.href = "/tasks";
+    }
+    catch (error)
+    {
+      console.error(error);
+    }
+
+    setRegistrationErrorMsg("Username already exists.");
   };
 
   return (
@@ -59,8 +78,8 @@ export const Signup = () => {
           <Avatar sx={{ m: 1, bgcolor: "primary.light" }}></Avatar>
           <Typography variant="h5">Sign Up</Typography>
           <Box sx={{ mt: 3 }}>
-              <Typography color="error" variant="body2" sx={usernameErrorMsg ? {mb: 1} : {display: "none"}}>
-                {usernameErrorMsg}
+              <Typography color="error" variant="body2" sx={usernameErrorMsg || registrationErrorMsg ? {mb: 1} : {display: "none"}}>
+                {usernameErrorMsg ? usernameErrorMsg : registrationErrorMsg}
               </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -73,6 +92,7 @@ export const Signup = () => {
                   value={username}
                   onChange={(e) => {
                     setUsername(e.currentTarget.value);
+                    setRegistrationErrorMsg("");
                     setUsernameErrorMsg(""); // Clear error when typing in the username field
                   }}
                 />
@@ -91,6 +111,7 @@ export const Signup = () => {
                   value={password}
                   onChange={(e) => {
                     setPassword(e.currentTarget.value);
+                    setRegistrationErrorMsg("");
                     setPasswordErrorMsg(""); // Clear error when typing in the password field
                   }}
                 />
@@ -108,6 +129,7 @@ export const Signup = () => {
                   value={passwordConfirm}
                   onChange={(e) => {
                     setPasswordConfirm(e.currentTarget.value);
+                    setRegistrationErrorMsg("");
                   }}
                 />
               </Grid>
@@ -117,6 +139,9 @@ export const Signup = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={signupBtnClickHandler}
+              disabled={    username.length === 0 || password.length === 0 || passwordConfirm.length === 0
+                         || password !== passwordConfirm || usernameErrorMsg.length !== 0
+                         || passwordErrorMsg.length !== 0 || registrationErrorMsg.length !== 0 }
             >
               Register
             </Button>
