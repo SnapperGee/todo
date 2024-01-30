@@ -19,6 +19,7 @@ import {
     const [password, setPassword] = useState("");
     const [usernameErrorMsg, setUsernameErrorMsg] = useState("");
     const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
+    const [usernamePasswordErrorMsg, setUsernamePasswordErrorMsg] = useState("");
 
     const [ login ] = useMutation(LOGIN);
 
@@ -55,8 +56,7 @@ import {
         console.error(error);
       }
 
-      // If login is successful, you can reset the form and clear errors
-      setUsernameErrorMsg("Invalid username and password combination.");
+      setUsernamePasswordErrorMsg("Invalid username and password combination.");
     };
 
     return (
@@ -74,8 +74,8 @@ import {
             <Avatar sx={{ m: 1, bgcolor: "primary.light" }}></Avatar>
             <Typography variant="h5">Login</Typography>
             <Box sx={{ mt: 3 }}>
-              <Typography color="error" variant="body2" sx={usernameErrorMsg ? {} : {display: "none"}}>
-                {usernameErrorMsg}
+              <Typography color="error" variant="body2" sx={usernameErrorMsg || usernamePasswordErrorMsg ? {mb: 1} : {display: "none"}}>
+                {usernameErrorMsg ? usernameErrorMsg : usernamePasswordErrorMsg}
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -87,13 +87,14 @@ import {
                     name="username"
                     value={username}
                     onChange={(e) => {
-                      setUsername(e.target.value);
+                      setUsername(e.currentTarget.value);
+                      setUsernamePasswordErrorMsg(""); // Clear error when typing in the password field
                       setUsernameErrorMsg(""); // Clear error when typing in the username field
                     }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography color="error" variant="body2" sx={passwordErrorMsg ? {} : {display: "none"}}>
+                  <Typography color="error" variant="body2" sx={passwordErrorMsg ? {mb: 1} : {display: "none"}}>
                     {passwordErrorMsg}
                   </Typography>
                   <TextField
@@ -105,7 +106,8 @@ import {
                     id="password"
                     value={password}
                     onChange={(e) => {
-                      setPassword(e.target.value);
+                      setPassword(e.currentTarget.value);
+                      setUsernamePasswordErrorMsg(""); // Clear error when typing in the password field
                       setPasswordErrorMsg(""); // Clear error when typing in the password field
                     }}
                   />
@@ -116,6 +118,7 @@ import {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={loginBtnClickHandler}
+                disabled={username.length === 0 || password.length === 0 || usernameErrorMsg.length !== 0 || passwordErrorMsg.length !== 0 || usernamePasswordErrorMsg.length !== 0}
               >
                 Log In
               </Button>
