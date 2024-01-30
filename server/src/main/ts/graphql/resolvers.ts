@@ -70,6 +70,11 @@ export const resolvers =
 
         createUser: async (_parent: unknown, {username, password}: {username: string, password: string}): Promise<{token: string, user: IUser}> =>
         {
+            if (await User.exists({username: {$regex: username, $options: "i"} }))
+            {
+                throw new GraphQLError(`${resolvers.Mutation.createUser.name}: Username already exists.`, {extensions: {code: "USERNAMEALREADYEXISTS", http: {status: 409}}});
+            }
+
             const user = await User.create({username, password});
             const token = signToken(user._id);
             return {token, user}
