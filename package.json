@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-<<<<<<< HEAD
   },
   "dependencies": {
     "@apollo/client": "^3.8.10",
@@ -46,7 +45,5 @@
     "graphql": "^16.8.1",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "styled-components": "^6.1.8"
-=======
->>>>>>> main
   }
 }
