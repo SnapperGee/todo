@@ -1,47 +1,69 @@
-// TasksViewer.tsx
 import { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_USER } from '../graphql/queries';
+import { Link } from 'react-router-dom';
 
 interface Task {
-  id: number;
+  _id: string;
   title: string;
   description: string;
   // Add properties as needed here
 }
 
+interface User {
+  _id: string;
+  tasks: Task[];
+}
+
 export const Tasks = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+
+  const { loading, error, data } = useQuery(GET_USER);
 
   useEffect(() => {
-    // Fetch tasks from backend here
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch('/api/tasks'); // Adjust the API endpoint
-        if (!response.ok) {
-          throw new Error(`Error fetching tasks: ${response.statusText}`);
-        }
+    if (!loading && !error && data) {
+      setUser(data.user);
+    }
+  }, [loading, error, data]);
 
-        const data = await response.json();
-        setTasks(data); // Assuming the response contains an array of tasks
-      } catch (error) {
-        console.error((error as Error).message);
-      }
-    };
+  if (loading) {
+    return <p>Loading tasks...</p>;
+  }
 
-    fetchTasks();
-  }, []);
+  if (error) {
+    return <p>Error fetching tasks: {error.message}</p>;
+  }
+
+  const generateUniqueId = () => {
+    // Use a library like 'uuid' or a simple timestamp-based approach
+    // For example, using the current timestamp as a unique ID
+    return new Date().getTime().toString();
+  };
+
+  const handleAddTask = () => {
+    generateUniqueId();
+
+    // Navigate to the task edit page with the new task ID
+    window.location.href = `/task`;
+  };
 
   return (
     <>
       <h1>Tasks Viewer Page</h1>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <h3>{task.title}</h3>
-            <p>{task.description}</p>
-            {/* Display other task details as needed */}
-          </li>
-        ))}
-      </ul>
+      <button onClick={handleAddTask}>Add new task</button>
+      {user ? (
+        <ul>
+          {user.tasks.map((task) => (
+            <li key={task._id}>
+              <h3>{task.title}</h3>
+              <p>{task.description}</p>
+              {/* Display other task details as needed */}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No tasks available for the current user.</p>
+      )}
     </>
   );
 };
