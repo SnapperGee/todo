@@ -22,27 +22,28 @@ Todo task manager web app.
 
 The frontend contains 3 navigable pages, a non navigable editor page, and an
 error page. It implements a [react][react website] based interface utilizing
-[Material UI][mui website] for its styling. Below is a breakdown of the frontend
-webpages:
+[Apollo Client][apollo website] and [GraphQL][graphql website] for querying and
+mutating the database and [Material UI][mui website] for styling. Below is a
+breakdown of the frontend webpages:
 
 - ### Login page
 
   <details>
-  <summary>
-    The Login page allows a user to authenticate and login.
-  </summary>
+    <summary>
+      The Login page allows a user to authenticate and login.
+    </summary>
 
-  ![login page](./docs/login_page.png "Login page")
+    ![login page](./docs/login_page.png "Login page")
   </details>
 
 - ### Signup page
 
   <details>
-  <summary>
-    The Signup page allows a user to create an account.
-  </summary>
+    <summary>
+      The Signup page allows a user to create an account.
+    </summary>
 
-  ![Signup page](./docs/signup_page.png "Signup page")
+    ![Signup page](./docs/signup_page.png "Signup page")
   </details>
 
 - ### Tasks page
@@ -62,20 +63,26 @@ webpages:
   logout.
 
   <details>
-  <summary>
-  When not logged in.
-  </summary>
+    <summary>
+      When not logged in.
+    </summary>
 
-  ![logged out error page](./docs/loggedout_error_page.png "Logged Out Error page")
+    ![logged out error page](./docs/loggedout_error_page.png "Logged Out Error page")
   </details>
 
   <details>
-  <summary>
-  When logged in.
-  </summary>
+    <summary>
+      When logged in.
+    </summary>
 
-  ![logged in error page](./docs/loggedin_error_page.png "Logged In Error page")
+    ![logged in error page](./docs/loggedin_error_page.png "Logged In Error page")
   </details>
+
+## Server backend
+
+The backend is an [express][express website] server that implements an
+[Apollo Server][apollo website] and [GraphQL][graphql website] for querying and
+mutating the MongoDB database.
 
 [node shield]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white "node"
 [node website]: https://nodejs.org/en/about "node"
