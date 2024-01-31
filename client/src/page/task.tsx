@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -21,19 +21,40 @@ export default function TaskTabs() {
   ]);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
 
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'tasks') {
+        const storedTasks = JSON.parse(event.newValue || '[]');
+        setTasks(storedTasks);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  const saveTasksToLocalStorage = (newTasks: Task[]) => {
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
+  };
+
   const handleRemoveTask = (taskId: number) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+    saveTasksToLocalStorage(updatedTasks);
     if (editingTask?.id === taskId) {
       setEditingTask(null);
     }
   };
 
   const handleToggleTask = (taskId: number) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      )
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, completed: !task.completed } : task
     );
+    setTasks(updatedTasks);
+    saveTasksToLocalStorage(updatedTasks);
   };
 
   const handleEditTask = (task: Task) => {
@@ -50,6 +71,7 @@ export default function TaskTabs() {
         )
       );
       setEditingTask(null);
+      saveTasksToLocalStorage(tasks);
     }
   };
 
@@ -141,4 +163,3 @@ export default function TaskTabs() {
     </Box>
   );
 }
-
