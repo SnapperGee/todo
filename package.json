@@ -23,6 +23,7 @@
     "postinstall": "cd ./client && npm i && cd ../server && npm i",
     "prestart": " cd ./client && npm run build",
     "react": "cd ./client && npm run dev",
+    "render-build": "npm install && npm run build",
     "seed": "cd ./server && npm run seed",
     "start": "cd ./server && npm start"
   },
