@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
-import { gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { GET_USER } from '../graphql/queries';
-import { CREATE_TASK } from '../graphql/mutations';
+import { useMutation } from '@apollo/client';
+import { CREATE_TASK } from '../graphql/mutations'; // Import the CREATE_TASK mutation
+import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
 
 interface Task {
   _id: string;
   title: string;
   description: string;
+  schedule: string; // Assuming schedule is a string representing date and time
+  accomplished: boolean;
 }
 
 interface User {
@@ -36,17 +39,17 @@ export const Tasks = () => {
     return <p>Error fetching tasks: {error.message}</p>;
   }
 
-  const handleAddTask = async () => {
-    // Use a library like 'uuid' or a simple timestamp-based approach
-    const newTaskId = new Date().getTime().toString();
+  const generateUniqueId = () => {
+    return new Date().getTime().toString();
+  };
 
+  const handleAddTask = async () => {
+    // Assume createTask is a mutation function obtained from useMutation hook
     try {
-      // Use the CREATE_TASK mutation to create a new task
       await createTask({
         variables: { title: "New Task", schedule: new Date().toISOString() },
         update: (cache, { data }) => {
           if (data?.createTask) {
-            // Update the cache with the newly created task
             cache.modify({
               fields: {
                 user: (existingUserRef) => {
@@ -57,6 +60,8 @@ export const Tasks = () => {
                         _id
                         title
                         description
+                        schedule
+                        accomplished
                       }
                     `,
                   });
@@ -73,7 +78,7 @@ export const Tasks = () => {
       });
 
       // Redirect to the task editor page with the new task ID
-      window.location.href = `/task/${newTaskId}/edit`;
+      window.location.href = `/task/`;
     } catch (error) {
       console.error(error);
     }
@@ -82,18 +87,17 @@ export const Tasks = () => {
   return (
     <>
       <h1>Tasks Viewer Page</h1>
+      <Link to="/task">
       <button onClick={handleAddTask}>Add new task</button>
+      </Link>
       {user ? (
         <ul>
           {user.tasks.map((task) => (
             <li key={task._id}>
               <h3>{task.title}</h3>
               <p>{task.description}</p>
-              {/* Display other task details as needed */}
-              {/* Add Edit button with a Link to the task edit page */}
-              <Link to={`/task/${task._id}/edit`}>
-                <button>Edit</button>
-              </Link>
+              <p>Schedule: {task.schedule}</p>
+              <p>Accomplished: {task.accomplished ? 'Yes' : 'No'}</p>
             </li>
           ))}
         </ul>
