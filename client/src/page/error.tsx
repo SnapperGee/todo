@@ -13,7 +13,7 @@ export default function Error() {
                 justifyContent: "center",
                 alignItems: "center",
                 flexDirection: "column",
-                minHeight: "100vh"
+                minHeight: "90vh"
             }}
         >
             <Typography variant="h1">
