@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
           element: <Login />,
         },
         {
-          path: "task",
+          path: "task/:id",
           element: <Task />,
         },
         {
