@@ -8,6 +8,7 @@ Todo task manager web app.
 [![Material UI][mui shield]][mui website]
 [![SASS][sass shield]][sass website]
 [![MongoDB][mongodb shield]][mongodb website]
+[![Mongoose][mongoose shield]][mongoose website]
 [![Apollo][apollo shield]][apollo website]
 [![GraphQL][graphql shield]][graphql website]
 [![Jwt][jwt shield]][jwt website]
@@ -82,8 +83,9 @@ breakdown of the frontend webpages:
 ## Server backend
 
 The backend is an [express][express website] server that implements an
-[Apollo Server][apollo website] and [GraphQL][graphql website] for querying and
-mutating the MongoDB database.
+[Apollo Server][apollo website] and [GraphQL][graphql website] with
+the [Mongoose][mongoose website] ODM for querying and mutating the
+[MongoDB][mongodb website] database.
 
 [node shield]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white "node"
 [node website]: https://nodejs.org/en/about "node"
@@ -95,6 +97,8 @@ mutating the MongoDB database.
 [react website]: https://react.dev/ "React"
 [mongodb shield]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white "MongoDB"
 [mongodb website]: https://www.mongodb.com/ "MongoDB"
+[mongoose shield]: https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=MongoDB&logoColor=white "Mongoose"
+[mongoose website]: https://mongoosejs.com/ "Mongoose"
 [mui shield]: https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white "Material UI"
 [mui website]: https://mui.com/ "Material UI"
 [apollo website]: https://www.apollographql.com/ "Apollo"
