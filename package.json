@@ -22,7 +22,6 @@
     "express": "cd ./server && npm run dev",
     "postinstall": "cd ./client && npm i && cd ../server && npm i",
     "react": "cd ./client && npm run dev",
-    "render-build": "npm install && npm run build",
     "seed": "cd ./server && npm run seed",
     "start": "cd ./server && npm start"
   },
