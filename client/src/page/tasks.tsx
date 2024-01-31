@@ -87,7 +87,7 @@ export const Tasks = () => {
   return (
     <>
       <h1>Tasks Viewer Page</h1>
-      <Link to="/task">
+      <Link to="/task/taskId">
       <button onClick={handleAddTask}>Add new task</button>
       </Link>
       {user ? (
