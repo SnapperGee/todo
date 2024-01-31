@@ -18,6 +18,65 @@ Todo task manager web app.
 ![Git][git shield]
 [![GitHub][github shield]][github repo]
 
+## Client frontend
+
+The frontend contains 3 navigable pages, a non navigable editor page, and an
+error page. It implements a [react][react website] based interface utilizing
+[Material UI][mui website] for its styling. Below is a breakdown of the frontend
+webpages:
+
+- ### Login page
+
+  <details>
+  <summary>
+    The Login page allows a user to authenticate and login.
+  </summary>
+
+  ![login page](./docs/login_page.png "Login page")
+  </details>
+
+- ### Signup page
+
+  <details>
+  <summary>
+    The Signup page allows a user to create an account.
+  </summary>
+
+  ![Signup page](./docs/signup_page.png "Signup page")
+  </details>
+
+- ### Tasks page
+
+  The Tasks page allows a user to view and create new todo tasks as well as
+  select pre-existing todo tasks to edit or delete.
+
+- ### Task page
+
+  The Task page allows a user to edit or delete a task.
+
+- ### Error page
+
+  The error page is displayed when a user navigates to a page that does not
+  exist. It contains link to the login/signup pages if a user is not logged in
+  otherwise it displays a link to the tasks page or the option for a user to
+  logout.
+
+  <details>
+  <summary>
+  When not logged in.
+  </summary>
+
+  ![logged out error page](./docs/loggedout_error_page.png "Logged Out Error page")
+  </details>
+
+  <details>
+  <summary>
+  When logged in.
+  </summary>
+
+  ![logged in error page](./docs/loggedin_error_page.png "Logged In Error page")
+  </details>
+
 [node shield]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white "node"
 [node website]: https://nodejs.org/en/about "node"
 [typescript shield]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white "TypeScript"
