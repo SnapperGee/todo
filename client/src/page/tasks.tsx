@@ -39,10 +39,6 @@ export const Tasks = () => {
     return <p>Error fetching tasks: {error.message}</p>;
   }
 
-  const generateUniqueId = () => {
-    return new Date().getTime().toString();
-  };
-
   const handleAddTask = async () => {
     // Assume createTask is a mutation function obtained from useMutation hook
     try {
